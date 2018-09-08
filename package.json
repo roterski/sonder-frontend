@@ -1,7 +1,10 @@
 {
   "name": "sonder_frontend",
   "nativescript": {
-    "id": "org.nativescript.sonderfrontend"
+    "id": "org.nativescript.sonderfrontend",
+    "tns-ios": {
+      "version": "4.2.0"
+    }
   },
   "version": "0.0.0",
   "scripts": {
@@ -34,10 +37,11 @@
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
+    "@angular-devkit/build-angular": "~0.7.0",
     "@angular/cli": "~6.1.0",
     "@angular/compiler-cli": "~6.0.3",
-    "@angular-devkit/build-angular": "~0.7.0",
     "@nativescript/schematics": "~0.2.0",
+    "@ngrx/schematics": "^6.1.0",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
