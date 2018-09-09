@@ -5,7 +5,7 @@ import { map, tap, catchError, } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { Store } from '@ngrx/store';
-import { State } from '../reducers/auth.reducer';
+import { AuthState } from '../reducers/auth.reducer';
 
 @Injectable()
 export class AuthEffects {
@@ -21,5 +21,5 @@ export class AuthEffects {
     })
   );
 
-  constructor(private actions$: Actions, private authService: AuthService, private store: Store<State>) {}
+  constructor(private actions$: Actions, private authService: AuthService, private store: Store<AuthState>) {}
 }

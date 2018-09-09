@@ -1,21 +1,21 @@
 import { Action } from '@ngrx/store';
 import { AuthActions, AuthActionTypes } from '../actions/auth.actions';
 
-export interface State {
+export interface AuthState {
   loggedIn: boolean;
   loading: boolean;
   facebookAccessToken: string;
   backendAuthToken: string;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
   loggedIn: false,
   loading: false,
   facebookAccessToken: null,
   backendAuthToken: null,
 };
 
-export function reducer(state = initialState, action: AuthActions): State {
+export function reducer(state = initialState, action: AuthActions): AuthState {
   switch (action.type) {
     case AuthActionTypes.LogIn: {
       return {
