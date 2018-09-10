@@ -8,6 +8,7 @@ import { FacebookService } from 'ngx-facebook';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthenticatedGuard, UnauthenticatedGuard } from './guards';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule
   ],
   declarations: [LoginPageComponent],
-  providers: [FacebookService]
+  providers: [FacebookService, AuthenticatedGuard]
 })
 export class AuthModule { }
