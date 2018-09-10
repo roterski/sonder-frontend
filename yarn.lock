@@ -5667,6 +5667,10 @@ neo-async@^2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/neo-async/-/neo-async-2.5.2.tgz#489105ce7bc54e709d736b195f82135048c50fcc"
 
+ngrx-store-localstorage@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/ngrx-store-localstorage/-/ngrx-store-localstorage-5.0.1.tgz#83b1db02c7262dafd4866a3477fb7ac668aba3ba"
+
 ngx-facebook@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/ngx-facebook/-/ngx-facebook-2.4.0.tgz#454141ce41118c1956d9db896c956f3891f8bbd7"
