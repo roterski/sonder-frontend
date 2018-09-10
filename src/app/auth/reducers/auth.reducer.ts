@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { AuthActions, AuthActionTypes } from '../actions/auth.actions';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface AuthState {
   loggedIn: boolean;
@@ -60,3 +61,7 @@ export function reducer(state = initialState, action: AuthActions): AuthState {
       return state;
   }
 }
+
+export const getAuth = createSelector(createFeatureSelector<AuthState>('auth'), state => state);
+export const getLoggedIn = createSelector(getAuth, (auth: any) => auth.loggedIn);
+export const getBackendAuthToken = createSelector(getAuth, (auth: any) => auth.backendAuthToken);

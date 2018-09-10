@@ -10,14 +10,13 @@ import { AuthState } from '../reducers/auth.reducer';
 @Injectable()
 export class AuthEffects {
 
-  @Effect()
+  @Effect({ dispatch: false })
   logIn$ = this.actions$.pipe(
     ofType(AuthActionTypes.LogIn),
     tap(() => {
       this.authService.facebookLogIn().pipe(
-        map((accessToken: string) => this.store.dispatch(new FacebookAuthenticated(accessToken))),
         catchError((error: any) => of(this.store.dispatch(new AuthenticationFailed())))
-      );
+      ).subscribe(accessToken => this.store.dispatch(new FacebookAuthenticated(accessToken)));
     })
   );
 

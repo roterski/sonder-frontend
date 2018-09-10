@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FacebookService, InitParams, AuthResponse } from 'ngx-facebook';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, exhaustMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,17 +12,15 @@ export class AuthService {
   constructor(private http: HttpClient, private facebookService: FacebookService) {
     const params: InitParams = {
       version: 'v2.10',
-      appId: '897988177030305'
+      appId: environment.facebookAppId
     };
     facebookService.init(params);
   }
 
   facebookLogIn(): Observable<any> {
-    return from(this.facebookService.getLoginStatus())
-      .pipe(
-        map((data: any) => data.status === 'connected' ? of(data) : from(this.facebookService.login())),
-        map((data: any) => data.authResponse.accessToken),
-        catchError(error => Observable.throw(error.json()))
-      );
+    return from(this.facebookService.getLoginStatus()).pipe(
+      exhaustMap(data => data.status === 'connected' ? of(data) : from(this.facebookService.login())),
+      map(data => data.authResponse.accessToken)
+    );
   }
 }
