@@ -12,15 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './app.effects';
 import { environment } from '../environments/environment';
 import 'nativescript-localstorage';
-
-import * as application from 'application';
 import { NativeScriptFacebookModule } from 'nativescript-facebook/angular';
-
-const nsFacebook = require('nativescript-facebook');
-
-application.on(application.launchEvent, function (args) {
-  nsFacebook.init(environment.facebookAppId);
-});
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";

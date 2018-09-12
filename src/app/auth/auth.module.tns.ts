@@ -7,7 +7,6 @@ import { AuthEffects } from './effects/auth.effects';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
-// import { HttpClientModule } from '@angular/common/http';
 import { AuthenticatedGuard, UnauthenticatedGuard } from './guards';
 
 @NgModule({
