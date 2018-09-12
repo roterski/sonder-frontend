@@ -24,19 +24,20 @@ export class AuthEffects {
   logIn$ = this.actions$.pipe(
     ofType(AuthActionTypes.LogIn),
     tap(() => {
-      this.authService.facebookLogIn().pipe(
-        catchError((error: any) => of(this.store.dispatch(new AuthenticationFailed())))
-      ).subscribe(accessToken => this.store.dispatch(new FacebookAuthenticated(accessToken)));
-    })
+      this.authService
+          .facebookLogIn()
+          .subscribe(accessToken => this.store.dispatch(new FacebookAuthenticated(accessToken)));
+    }),
+    catchError((error: any) => of(this.store.dispatch(new AuthenticationFailed())))
   );
 
   @Effect({ dispatch: false })
   facebookAuthenticated$ = this.actions$.pipe(
     ofType(AuthActionTypes.FacebookAuthenticated),
-    switchMap((action: FacebookAuthenticated) => {
-      return this.backendService.authenticate(action.payload).pipe(
-        tap((data: any) => this.store.dispatch(new LoggedIn(data)))
-      );
+    tap((action: FacebookAuthenticated) => {
+      this.backendService
+          .authenticate(action.payload)
+          .subscribe((data: any) => this.store.dispatch(new LoggedIn(data)));
     }),
     catchError((error: any) => of(this.store.dispatch(new AuthenticationFailed())))
   );

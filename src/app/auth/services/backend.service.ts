@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { AuthState, getBackendAuthToken } from '../reducers/auth.reducer';
@@ -34,14 +34,10 @@ export class BackendService {
 
   authenticate(accessToken: string): Observable<any> {
     return this.http
-      .post(
-      this.url('/authenticate'),
-      { access_token: accessToken },
-      this.staticHeaders()
-      )
+      .post(this.url('/authenticate'), { access_token: accessToken }, this.staticHeaders())
       .pipe(
-      map((response: any) => response.auth_token),
-      catchError(error => Observable.throw(error.json()))
+        map((response: any) => response.auth_token),
+        catchError(error => this.rethrow(error))
       );
   }
 
@@ -53,7 +49,7 @@ export class BackendService {
             if (error.status == '401') {
               this.store.dispatch(new AuthenticationFailed());
             }
-            return Observable.throw(error);
+            return this.rethrow(error);
           })
         );
       })
@@ -76,6 +72,11 @@ export class BackendService {
       }
     };
   }
+
+  private rethrow(error) {
+    return throwError('json' in error ? error.json() : error);
+  }
+
   private headers(accessToken: string) {
     return {
       headers: {
