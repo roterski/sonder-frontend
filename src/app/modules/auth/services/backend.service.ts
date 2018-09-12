@@ -6,7 +6,7 @@ import { AuthState, getBackendAuthToken } from '../reducers/auth.reducer';
 import { switchMap } from 'rxjs/operators';
 import { map, catchError, concat, mergeMap } from 'rxjs/operators';
 import { AuthenticationFailed } from '../actions/auth.actions';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'

@@ -3,7 +3,7 @@ import * as Facebook from 'nativescript-facebook';
 import { NativeScriptHttpClientModule } from 'nativescript-angular/http-client';
 import { Observable, from, of } from 'rxjs';
 import { map, catchError, exhaustMap} from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { bindNodeCallback } from 'rxjs/internal/observable/bindNodeCallback';
 import * as application from 'application';
 

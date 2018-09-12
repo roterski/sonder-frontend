@@ -6,7 +6,7 @@ import {
   MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../environments/environment';
-import { AuthActionTypes } from '../auth/actions/auth.actions';
+import { AuthActionTypes } from '../modules/auth/actions/auth.actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
 
 export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
