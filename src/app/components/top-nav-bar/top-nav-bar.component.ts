@@ -7,7 +7,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 })
 export class TopNavBarComponent implements OnInit {
   @Input() loggedIn: boolean;
-  @Output() logOut = new EventEmitter<boolean>();
+  @Output() logOut = new EventEmitter<void>();
 
   constructor() { }
 

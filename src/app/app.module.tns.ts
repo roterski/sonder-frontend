@@ -13,6 +13,8 @@ import { AppEffects } from './store/app.effects';
 import { environment } from '../environments/environment';
 import 'nativescript-localstorage';
 import { NativeScriptFacebookModule } from 'nativescript-facebook/angular';
+import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
+import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -24,6 +26,8 @@ import { NativeScriptFacebookModule } from 'nativescript-facebook/angular';
   declarations: [
     AppComponent,
     HomeComponent,
+    TopNavBarComponent,
+    AuthenticatedAppComponent
   ],
   imports: [
     NativeScriptModule,

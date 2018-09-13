@@ -1,5 +1,4 @@
 <div>
   <span routerLink="/">Home</span>
-  <span routerLink="/login" *ngIf="!loggedIn">Log in</span>
-  <span (click)="logOut.emit(true)" *ngIf="loggedIn">Log out</span>
+  <span (click)="logOut.emit(true)">Log out</span>
 </div>

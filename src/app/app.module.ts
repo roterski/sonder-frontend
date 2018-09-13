@@ -12,12 +12,14 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { AuthModule } from './modules/auth/auth.module';
 import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
+import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     TopNavBarComponent,
+    AuthenticatedAppComponent,
   ],
   imports: [
     BrowserModule,
