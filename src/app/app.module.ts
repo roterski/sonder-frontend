@@ -11,11 +11,13 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { AuthModule } from './modules/auth/auth.module';
+import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    TopNavBarComponent,
   ],
   imports: [
     BrowserModule,
