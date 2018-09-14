@@ -22,6 +22,7 @@ export class PostsLoaded implements Action {
 
 export class LoadPost implements Action {
   readonly type = PostsActionTypes.LoadPost;
+  constructor(public payload: { postId: number }) {}
 }
 export class PostLoaded implements Action {
   readonly type = PostsActionTypes.PostLoaded;
@@ -30,6 +31,7 @@ export class PostLoaded implements Action {
 
 export class CreatePost implements Action {
   readonly type = PostsActionTypes.CreatePost;
+  constructor(public payload: { post: Post }) { }
 }
 export class PostCreated implements Action {
   readonly type = PostsActionTypes.PostCreated;
