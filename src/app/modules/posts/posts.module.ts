@@ -4,6 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import * as fromPosts from './reducers/posts.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsEffects } from './effects/posts.effects';
+import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
 
 @NgModule({
   imports: [
@@ -11,6 +12,6 @@ import { PostsEffects } from './effects/posts.effects';
     StoreModule.forFeature('posts', fromPosts.reducer),
     EffectsModule.forFeature([PostsEffects])
   ],
-  declarations: []
+  declarations: [PostsListPageComponent]
 })
 export class PostsModule { }
