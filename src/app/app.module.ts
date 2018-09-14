@@ -13,6 +13,7 @@ import { AppEffects } from './store/app.effects';
 import { AuthModule } from './modules/auth/auth.module';
 import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AuthenticatedAppComponent } from './components/authenticated-app/authen
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    AuthModule
+    AuthModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
