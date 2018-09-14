@@ -18,13 +18,9 @@ export class UnauthenticatedGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.store.select(getLoggedIn).pipe(
-      switchMap((loggedIn) => {
-        if (loggedIn) {
-          this.router.navigate(['/']);
-          return of(false);
-        } else {
-          return of(true);
-        }
+      switchMap((loggedIn: boolean) => {
+        if (loggedIn) { this.router.navigate(['/']); }
+        return of(!loggedIn);
       })
     );
   }

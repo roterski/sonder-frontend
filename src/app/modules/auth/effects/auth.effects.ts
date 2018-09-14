@@ -8,7 +8,7 @@ import {
   LoggedIn,
   LogOut,
   LoggedOut } from '../actions/auth.actions';
-import { map, tap, catchError, } from 'rxjs/operators';
+import { map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { BackendService } from '../services/backend.service';
