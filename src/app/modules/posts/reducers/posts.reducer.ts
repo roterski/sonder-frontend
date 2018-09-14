@@ -36,12 +36,7 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
       return state;
   }
 }
-// export const getPostEntities = createFeatureSelector<PostsState>('posts');
 export const getPosts = createSelector(createFeatureSelector<PostsState>('posts'), state => state);
-// export const getPostEntities = (state: PostsState) => {
-//   debugger
-//   return state.posts;
-// };
 export const getPostEntities = createSelector(getPosts, (state) => state.posts);
 export const getSelectedPostId = createSelector(getPostEntities, (postEntities: PostEntities) => postEntities.selectedPostId);
 export const getPostsLoaded = createSelector(getPostEntities, (postEntities: PostEntities) => postEntities.loaded);

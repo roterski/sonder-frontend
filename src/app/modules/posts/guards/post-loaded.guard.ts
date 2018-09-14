@@ -22,12 +22,21 @@ export class PostLoadedGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    return of(false);
-    // return this.store.select(selectPostByPostId(next.params.postId)).pipe(
-    //   switchMap((postExists: boolean) => {
-    //     if (!postExists) { this.store.dispatch(new LoadPost({ postId: next.params.postId})); }
-    //     return of(postExists);
-    //   })
-    // );
+    return this.checkStore(next.params.postId).pipe(
+      switchMap(() => of(true)),
+      catchError(() => of(false))
+    );
+  }
+
+  checkStore(postId: number): Observable<boolean> {
+    return this.store.select(selectPostByPostId(postId)).pipe(
+      tap(loaded => {
+        if (!loaded) {
+          this.store.dispatch(new LoadPost({ postId: postId }));
+        }
+      }),
+      filter(loaded => loaded),
+      take(1)
+    );
   }
 }
