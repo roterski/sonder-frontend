@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createSelector, createFeatureSelector } from '@ngrx/store';
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { PostsActions, PostsActionTypes } from '../actions/posts.actions';
 import { Post } from '../models/post.model';
@@ -9,6 +9,7 @@ export interface PostsState {
 
 export interface PostEntities extends EntityState<Post> {
   selectedPostId: number | null;
+  loaded: boolean;
 }
 
 export function sortByPoints(a: Post, b: Post): number {
@@ -20,13 +21,13 @@ export const adapter: EntityAdapter<Post> = createEntityAdapter<Post>({
 });
 
 export const initialState: PostsState = {
-  posts: adapter.getInitialState({ selectedPostId: null })
+  posts: adapter.getInitialState({ selectedPostId: null, loaded: false })
 };
 
 export function reducer(state = initialState, action: PostsActions): PostsState {
   switch (action.type) {
     case PostsActionTypes.PostsLoaded:
-      return { ...state, posts: adapter.upsertMany(action.payload.posts, state.posts) };
+      return { ...state, posts: { ...adapter.upsertMany(action.payload.posts, state.posts), loaded: true } };
     case PostsActionTypes.PostLoaded:
       return { ...state, posts: adapter.upsertOne(action.payload.post, state.posts) };
     case PostsActionTypes.PostCreated:
@@ -35,11 +36,24 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
       return state;
   }
 }
+// export const getPostEntities = createFeatureSelector<PostsState>('posts');
+export const getPosts = createSelector(createFeatureSelector<PostsState>('posts'), state => state);
+// export const getPostEntities = (state: PostsState) => {
+//   debugger
+//   return state.posts;
+// };
+export const getPostEntities = createSelector(getPosts, (state) => state.posts);
+export const getSelectedPostId = createSelector(getPostEntities, (postEntities: PostEntities) => postEntities.selectedPostId);
+export const getPostsLoaded = createSelector(getPostEntities, (postEntities: PostEntities) => postEntities.loaded);
 
-export const getSelectedPostId = (state: PostsState) => state.posts.selectedPostId;
-
-const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();
+const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors(getPostEntities);
 export const selectPostIds = selectIds;
 export const selectPostEntities = selectEntities;
 export const selectAllPosts = selectAll;
 export const selectPostTotal = selectTotal;
+
+export const selectPostByPostId = (postId: number) => {
+  return createSelector(selectPostEntities, (postsEntites) => {
+    return postsEntites[postId] === undefined ? false : true;
+  });
+};

@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { AuthModule } from './modules/auth/auth.module';
+import { PostsModule } from './modules/posts/posts.module';
 import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
@@ -30,6 +31,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     AuthModule,
+    PostsModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule

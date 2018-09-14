@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
-import * as fromAuth from './reducers/auth.reducer';
+import { reducer } from './reducers/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './effects/auth.effects';
 import { FacebookService } from 'ngx-facebook';
@@ -14,7 +14,7 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('auth', fromAuth.reducer),
+    StoreModule.forFeature('auth', reducer),
     EffectsModule.forFeature([AuthEffects]),
     AuthRoutingModule,
     HttpClientModule,

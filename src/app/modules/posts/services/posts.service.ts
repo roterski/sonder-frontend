@@ -1,8 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import 'rxjs/add/observable/throw';
-
 import { Post } from '../models';
 import { BackendService } from '../../auth/services/backend.service';
 
