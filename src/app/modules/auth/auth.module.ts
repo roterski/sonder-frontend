@@ -9,6 +9,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthenticatedGuard, UnauthenticatedGuard } from './guards';
+import { MatCardModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -16,7 +17,9 @@ import { AuthenticatedGuard, UnauthenticatedGuard } from './guards';
     StoreModule.forFeature('auth', fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects]),
     AuthRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatButtonModule
   ],
   declarations: [LoginPageComponent],
   providers: [FacebookService, AuthenticatedGuard]
