@@ -7,7 +7,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { PostsEffects } from './effects/posts.effects';
 import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
 import { PostsService } from './services/posts.service';
-import { MatListModule } from '@angular/material';
+import { MatListModule, MatCardModule } from '@angular/material';
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
 
 @NgModule({
@@ -16,7 +16,8 @@ import { PostShowPageComponent } from './containers/post-show-page/post-show-pag
     RouterModule,
     StoreModule.forFeature('posts', reducer),
     EffectsModule.forFeature([PostsEffects]),
-    MatListModule
+    MatListModule,
+    MatCardModule
   ],
   declarations: [PostsListPageComponent, PostShowPageComponent],
   providers: [PostsService]

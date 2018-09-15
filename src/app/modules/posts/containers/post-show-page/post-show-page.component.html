@@ -1,3 +1,4 @@
-<p>
-  post-show-page works!
-</p>
+<mat-card *ngIf="(post$ | async) as post">
+  <mat-card-title>{{ post.title }}</mat-card-title>
+  <mat-card-content>{{ post.body }}</mat-card-content>
+</mat-card>

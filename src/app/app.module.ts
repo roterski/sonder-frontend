@@ -16,6 +16,7 @@ import { MatToolbarModule, MatButtonModule } from '@angular/material';
 import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.component';
 import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     StoreModule.forRoot(reducers, { metaReducers }),
+    StoreRouterConnectingModule.forRoot(),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
     AuthModule,

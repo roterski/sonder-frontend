@@ -8,6 +8,9 @@ import {
 import { environment } from '../../environments/environment';
 import { AuthActionTypes } from '../modules/auth/actions/auth.actions';
 import { localStorageSync } from 'ngrx-store-localstorage';
+import { routerReducer } from '@ngrx/router-store';
+import { Params } from '@angular/router';
+import { RouterReducerState } from '@ngrx/router-store';
 
 export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
   return function (state, action) {
@@ -31,9 +34,20 @@ export const metaReducers: Array<MetaReducer<any, any>> = [
 
 
 export interface State {
-
+  router: RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<State> = {
-
+  router: routerReducer
 };
+
+
+export interface RouterStateUrl {
+  url: string;
+  queryParams: Params;
+  params: Params;
+}
+
+export const getRouterState = createFeatureSelector<
+  RouterReducerState<RouterStateUrl>
+  >('router');
