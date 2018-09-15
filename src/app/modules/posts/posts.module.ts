@@ -9,6 +9,7 @@ import { PostsListPageComponent } from './containers/posts-list-page/posts-list-
 import { PostsService } from './services/posts.service';
 import { MatListModule, MatCardModule } from '@angular/material';
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
+import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,7 @@ import { PostShowPageComponent } from './containers/post-show-page/post-show-pag
     MatListModule,
     MatCardModule
   ],
-  declarations: [PostsListPageComponent, PostShowPageComponent],
+  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent],
   providers: [PostsService]
 })
 export class PostsModule { }
