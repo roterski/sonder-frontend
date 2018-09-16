@@ -1,3 +1,18 @@
-<p>
-  new-post-page works!
-</p>
+<mat-card>
+  <form [formGroup]="postForm">
+    <mat-card-title>
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Post Title" class="form-control" formControlName="title" required>
+      </mat-form-field>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <textarea matInput placeholder="Post Content" class="form-control" formControlName="body"></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="submitForm()">Create</button>
+      <mat-error *ngIf="hasError">Something went wrong. 😓</mat-error>
+    </mat-card-actions>
+  </form>
+</mat-card>

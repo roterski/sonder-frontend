@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PostsListPageComponent, PostShowPageComponent } from './containers';
+import { PostsListPageComponent, PostShowPageComponent, NewPostPageComponent } from './containers';
 import { PostsLoadedGuard, PostLoadedGuard } from './guards';
 
 export const postsRoutes: Routes = [
@@ -9,11 +9,10 @@ export const postsRoutes: Routes = [
     canActivate: [PostsLoadedGuard],
     component: PostsListPageComponent
   },
-  // {
-  //   path: "new",
-  //   canActivate: [AcceptedGroupsLoadedGuard],
-  //   component: NewPostFormComponent
-  // },
+  {
+    path: 'new',
+    component: NewPostPageComponent
+  },
   {
     path: ':postId',
     canActivate: [PostLoadedGuard, /* TODO: PostCommentsLoadedGuard*/],
