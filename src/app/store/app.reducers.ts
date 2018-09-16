@@ -24,7 +24,7 @@ export function clearState(reducer: ActionReducer<any>): ActionReducer<any> {
 export function localStorageSyncReducer(
   reducer: ActionReducer<any>
 ): ActionReducer<any> {
-  return localStorageSync({ keys: ['auth'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: ['auth', 'posts'], rehydrate: true })(reducer);
 }
 
 export const metaReducers: Array<MetaReducer<any, any>> = [

@@ -9,7 +9,8 @@ export enum PostsActionTypes {
   PostLoaded = '[Posts] Post Loaded',
 
   CreatePost = '[Posts] Create Post',
-  PostCreated = '[Posts] Post Created'
+  PostCreated = '[Posts] Post Created',
+  PostCreationFailed = '[Posts] Post Creation Failed'
 }
 
 export class LoadPosts implements Action {
@@ -37,6 +38,10 @@ export class PostCreated implements Action {
   readonly type = PostsActionTypes.PostCreated;
   constructor(public payload: { post: Post }) {}
 }
+export class PostCreationFailed implements Action {
+  readonly type = PostsActionTypes.PostCreationFailed;
+  constructor(public payload: { errors: any }) {}
+}
 
 export type PostsActions =
   | LoadPosts
@@ -44,4 +49,5 @@ export type PostsActions =
   | LoadPost
   | PostLoaded
   | CreatePost
-  | PostCreated;
+  | PostCreated
+  | PostCreationFailed;

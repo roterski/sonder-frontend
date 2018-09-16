@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CreatePost, PostCreated } from '../../actions/posts.actions';
-import { PostsState } from '../../reducers/posts.reducer';
+import { PostsState, getNewPostErrors, getNewPostData } from '../../reducers/posts.reducer';
 import { PostsService } from '../../services';
+import { Post } from '../../models';
 
 @Component({
   selector: 'app-new-post-page',
@@ -15,7 +16,8 @@ import { PostsService } from '../../services';
 })
 export class NewPostPageComponent implements OnInit {
   postForm: FormGroup;
-  hasError: boolean;
+  errors$: Observable<object>;
+  post$: Observable<Post>;
 
   constructor(
     private store: Store<PostsState>,
@@ -24,19 +26,11 @@ export class NewPostPageComponent implements OnInit {
     private postsService: PostsService) { }
 
   ngOnInit() {
-    this.createForm();
+    this.post$ = this.store.select(getNewPostData);
+    this.errors$ = this.store.select(getNewPostErrors);
   }
 
-  createForm() {
-    this.postForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      body: ['']
-    });
-  }
-
-  submitForm() {
-    if (this.postForm.valid) {
-      this.store.dispatch(new CreatePost({ post: this.postForm.getRawValue() }));
-    }
+  createPost(post: Post) {
+    this.store.dispatch(new CreatePost({ post: post }));
   }
 }

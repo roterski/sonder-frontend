@@ -6,10 +6,16 @@ import { getRouterState, RouterStateUrl } from '../../../store/app.reducers';
 
 export interface PostsState {
   readonly posts: PostEntities;
+  readonly newPost: NewPost;
 }
 
 export interface PostEntities extends EntityState<Post> {
   loaded: boolean;
+}
+
+export interface NewPost {
+  data: Post;
+  errors: any;
 }
 
 export function sortByPoints(a: Post, b: Post): number {
@@ -21,7 +27,11 @@ export const adapter: EntityAdapter<Post> = createEntityAdapter<Post>({
 });
 
 export const initialState: PostsState = {
-  posts: adapter.getInitialState({ loaded: false })
+  posts: adapter.getInitialState({ loaded: false }),
+  newPost: {
+    data: new Post(),
+    errors: null
+  }
 };
 
 export function reducer(state = initialState, action: PostsActions): PostsState {
@@ -30,8 +40,31 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
       return { ...state, posts: { ...adapter.upsertMany(action.payload.posts, state.posts), loaded: true } };
     case PostsActionTypes.PostLoaded:
       return { ...state, posts: adapter.upsertOne(action.payload.post, state.posts) };
+    case PostsActionTypes.CreatePost:
+      return {
+        ...state,
+        newPost: {
+          data: action.payload.post,
+          errors: null
+        }
+      };
     case PostsActionTypes.PostCreated:
-      return { ...state, posts: adapter.upsertOne(action.payload.post, state.posts) };
+      return {
+        ...state,
+        posts: adapter.upsertOne(action.payload.post, state.posts),
+        newPost: {
+          data: new Post(),
+          errors: null
+        }
+      };
+    case PostsActionTypes.PostCreationFailed:
+      return {
+        ...state,
+        newPost: {
+          ...state.newPost,
+          errors: action.payload.errors
+        }
+      };
     default:
       return state;
   }
@@ -66,3 +99,7 @@ export const getSelectedPost = createSelector(
     if (postId) { return postsEntites[postId]; }
   }
 );
+
+export const getNewPost = createSelector(getPosts, (state) => state.newPost);
+export const getNewPostData = createSelector(getNewPost, (newPost) => newPost.data);
+export const getNewPostErrors = createSelector(getNewPost, (newPost) => newPost.errors);

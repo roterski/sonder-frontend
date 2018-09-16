@@ -11,6 +11,7 @@ import { PostsService } from './services/posts.service';
 import { MatListModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
 import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
+import { PostFormComponent } from './components/post-form/post-form.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import { NewPostPageComponent } from './containers/new-post-page/new-post-page.c
     MatButtonModule,
     ReactiveFormsModule
   ],
-  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent],
+  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent],
   providers: [PostsService]
 })
 export class PostsModule { }

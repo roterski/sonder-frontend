@@ -1,11 +1,16 @@
 import { User } from './user.model';
 
-export interface Post {
-  id: number;
-  title: string;
-  body: string;
-  author: User;
-  points: number;
-  voted: number;
-  commentCount: number;
+export class Post {
+  constructor() {
+    this.title = '';
+    this.body = '';
+  }
+
+  public id: number;
+  public title: string;
+  public body: string;
+  public author: User;
+  public points: number;
+  public voted: number;
+  public commentCount: number;
 }
