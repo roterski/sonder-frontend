@@ -12,6 +12,7 @@ import { MatListModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatI
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
 import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
+import { CommentTreeComponent } from './components/comment-tree/comment-tree.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { PostFormComponent } from './components/post-form/post-form.component';
     MatButtonModule,
     ReactiveFormsModule
   ],
-  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent],
+  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent, CommentTreeComponent],
   providers: [PostsService]
 })
 export class PostsModule { }
