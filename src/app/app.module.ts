@@ -17,6 +17,7 @@ import { TopNavBarComponent } from './components/top-nav-bar/top-nav-bar.compone
 import { AuthenticatedAppComponent } from './components/authenticated-app/authenticated-app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { BottomButtonsComponent } from './components/bottom-buttons/bottom-buttons.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
     HomeComponent,
     TopNavBarComponent,
     AuthenticatedAppComponent,
+    BottomButtonsComponent,
   ],
   imports: [
     BrowserModule,
