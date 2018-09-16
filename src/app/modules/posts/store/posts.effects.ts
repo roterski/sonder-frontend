@@ -1,12 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { PostsActionTypes, PostsLoaded, CreatePost, PostCreated, LoadPost, PostLoaded, PostCreationFailed, LoadPosts } from '../actions/posts.actions';
+import {
+  PostsActionTypes,
+  PostsLoaded,
+  CreatePost,
+  PostCreated,
+  LoadPost,
+  PostLoaded,
+  PostCreationFailed,
+  LoadPosts,
+  LoadPostComments,
+  PostCommentsLoaded} from './posts.actions';
 import { map, tap, catchError, exhaustMap, mergeMap, switchMap, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Post } from '../models';
 import { PostsService } from '../services/posts.service';
-import { PostsState } from '../reducers/posts.reducer';
+import { PostsState } from './posts.interfaces';
 import { Router } from '@angular/router';
 
 @Injectable()
@@ -51,6 +61,22 @@ export class PostsEffects {
   postCreated$ = this.actions$.pipe(
     ofType(PostsActionTypes.PostCreated),
     exhaustMap((action: PostCreated) => this.router.navigate(['/posts']))
+  );
+
+  @Effect({ dispatch: false })
+  loadPostComments$ = this.actions$.pipe(
+    ofType(PostsActionTypes.LoadPostComments),
+    map((action: LoadPostComments) => action.payload.postId),
+    switchMap((postId: number) => {
+      return this
+        .postsService
+        .getPostComments(postId)
+        .pipe(
+          tap((comments: Comment[]) => {
+            return this.store.dispatch(new PostCommentsLoaded({ comments, postId }));
+          })
+        );
+    })
   );
 
   constructor(

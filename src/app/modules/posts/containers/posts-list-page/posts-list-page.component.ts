@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { PostsState, selectAllPosts } from '../../reducers/posts.reducer';
+import { PostsState, selectAllPosts } from '../../store';
 import { Post } from '../../models';
 
 @Component({

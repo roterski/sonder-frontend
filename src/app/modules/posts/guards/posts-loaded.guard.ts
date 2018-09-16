@@ -4,12 +4,10 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
-
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap, filter, take, catchError } from 'rxjs/operators';
-import { PostsState, getPostsLoaded } from '../reducers/posts.reducer';
-import { LoadPosts } from '../actions/posts.actions';
+import { PostsState, getPostsLoaded, LoadPosts } from '../store';
 
 @Injectable({
   providedIn: 'root'

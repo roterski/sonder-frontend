@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { PostsState, getSelectedPost } from '../../reducers/posts.reducer';
+import { PostsState, getSelectedPost } from '../../store';
 import { Post } from '../../models';
 import { Observable } from 'rxjs';
 

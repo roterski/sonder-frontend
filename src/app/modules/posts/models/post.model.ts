@@ -1,4 +1,4 @@
-import { User } from './user.model';
+import { Author } from './author.model';
 
 export class Post {
   constructor() {
@@ -9,7 +9,7 @@ export class Post {
   public id: number;
   public title: string;
   public body: string;
-  public author: User;
+  public author: Author;
   public points: number;
   public voted: number;
   public commentCount: number;

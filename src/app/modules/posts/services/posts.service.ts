@@ -25,4 +25,16 @@ export class PostsService {
       .post('/posts', { post })
       .pipe(map(response => response.data));
   }
+
+  getPostComments(postId: number): Observable<any> {
+    return this.backend
+      .get(`/posts/${postId}/comments`)
+      .pipe(map(response => response.data));
+  }
+
+  createComment(postId: number, comment: Comment): Observable<Comment> {
+    return this.backend
+      .post(`/posts/${postId}/comments`, { comment })
+      .pipe(map(response => response.data));
+  }
 }

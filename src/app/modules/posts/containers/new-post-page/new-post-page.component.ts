@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CreatePost, PostCreated } from '../../actions/posts.actions';
-import { PostsState, getNewPostErrors, getNewPostData } from '../../reducers/posts.reducer';
+import { CreatePost, PostCreated, PostsState, getNewPostErrors, getNewPostData } from '../../store';
 import { PostsService } from '../../services';
 import { Post } from '../../models';
 
