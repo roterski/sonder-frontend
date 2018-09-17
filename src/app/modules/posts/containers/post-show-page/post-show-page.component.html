@@ -2,3 +2,7 @@
   <mat-card-title>{{ post.title }}</mat-card-title>
   <mat-card-content>{{ post.body }}</mat-card-content>
 </mat-card>
+
+<mat-list role="list" *ngFor="let comment of (comments$ | async)">
+  <mat-list-item role="listitem">{{comment.body}}</mat-list-item>
+</mat-list>

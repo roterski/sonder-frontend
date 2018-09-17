@@ -14,7 +14,7 @@ import {
   PostCommentsLoaded} from './posts.actions';
 import { map, tap, catchError, exhaustMap, mergeMap, switchMap, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Post } from '../models';
+import { Post, Comment } from '../models';
 import { PostsService } from '../services/posts.service';
 import { PostsState } from './posts.interfaces';
 import { Router } from '@angular/router';

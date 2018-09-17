@@ -22,7 +22,7 @@ export const getCommentsByPost = (postId) => {
 export const getCommentsByPostLoaded = (postId) => {
   return createSelector(
     getCommentsByPost(postId),
-    (commentsByPost: CommentIds) => commentsByPost.loaded
+    (commentsByPost: CommentIds) => commentsByPost === undefined ? false : commentsByPost.loaded
   );
 };
 

@@ -1,7 +1,7 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { PostsActions, PostsActionTypes } from './posts.actions';
 import { Post, Comment } from '../models';
-import { PostsState, PostEntities, initialState, postAdapter } from './posts.interfaces';
+import { PostsState, PostEntities, initialState, postAdapter, commentAdapter } from './posts.interfaces';
 
 export function reducer(state = initialState, action: PostsActions): PostsState {
   switch (action.type) {
@@ -34,6 +34,31 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
           errors: action.payload.errors
         }
       };
+    case PostsActionTypes.LoadPostComments:
+      return {
+        ...state,
+        commentsByPost: {
+          ...state.commentsByPost,
+          [action.payload.postId]: {
+            ...state.commentsByPost[action.payload.postId],
+            loaded: false
+          }
+        }
+      };
+    case PostsActionTypes.PostCommentsLoaded:
+      const commentIds = action.payload.comments.map((comment) => comment.id);
+      return {
+        ...state,
+        comments: commentAdapter.upsertMany(action.payload.comments, state.comments),
+        commentsByPost: {
+          ...state.commentsByPost,
+          [action.payload.postId]: {
+            ids: commentIds,
+            loaded: true
+          }
+        }
+      };
+
     default:
       return state;
   }
