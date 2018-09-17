@@ -46,10 +46,14 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
         }
       };
     case PostsActionTypes.PostCommentsLoaded:
-      const commentIds = action.payload.comments.map((comment) => comment.id);
+      const comments = action.payload.comments;
+      const commentIds = comments.map((comment) => comment.id);
+      const commentEntities = commentAdapter.upsertMany(comments, state.comments);
+      appendChildrenIds(commentEntities.entities);
+
       return {
         ...state,
-        comments: commentAdapter.upsertMany(action.payload.comments, state.comments),
+        comments: commentEntities,
         commentsByPost: {
           ...state.commentsByPost,
           [action.payload.postId]: {
@@ -62,4 +66,16 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
     default:
       return state;
   }
+}
+
+function appendChildrenIds(entities) {
+  Object.keys(entities).forEach((id) => {
+    const entity = entities[id];
+    entity.childrenIds = entity.childrenIds || [];
+    const parentId = entities[id].parentIds.slice(-1)[0];
+    if (parentId) {
+      entities[parentId].childrenIds = entities[parentId].childrenIds || [];
+      entities[parentId].childrenIds.push(parseInt(id, 10));
+    }
+  });
 }

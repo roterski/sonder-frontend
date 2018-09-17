@@ -33,7 +33,19 @@ export const getCommentsByPostIds = (postId) => {
   );
 };
 
-export const getComments = (postId) => {
+export const getPostCommentEntities = (postId) => {
+  return createSelector(
+    selectCommentEntities,
+    getCommentsByPost(postId),
+    (commentEntities, commentIds) => {
+      return commentIds.ids.reduce((acc, id) => {
+        acc[id] = commentEntities[id];
+        return acc;
+      }, {});
+    });
+};
+
+export const getPostComments = (postId) => {
   return createSelector(
     selectCommentEntities,
     getCommentsByPostIds(postId),

@@ -1,3 +1,7 @@
-<p>
-  comment-tree works!
-</p>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding [matTreeNodeToggleRecursive]="true">
+    <mat-card>
+      {{ node.comment.body }}
+    </mat-card>
+  </mat-tree-node>
+</mat-tree>

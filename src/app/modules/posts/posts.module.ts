@@ -7,7 +7,13 @@ import { reducer, PostsEffects } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
 import { PostsService } from './services/posts.service';
-import { MatListModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import {
+  MatListModule,
+  MatButtonModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatTreeModule } from '@angular/material';
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
 import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
@@ -24,6 +30,7 @@ import { CommentTreeComponent } from './components/comment-tree/comment-tree.com
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatTreeModule,
     ReactiveFormsModule
   ],
   declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent, CommentTreeComponent],

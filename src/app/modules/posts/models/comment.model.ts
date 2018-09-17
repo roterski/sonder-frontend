@@ -7,4 +7,5 @@ export interface Comment {
   parentIds: Array<number>;
   points: number;
   voted: number;
+  childrenIds: Array<number>;
 }
