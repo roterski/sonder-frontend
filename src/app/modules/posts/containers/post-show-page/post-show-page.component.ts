@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { PostsState, getSelectedPost, getPostCommentEntities, getPostComments } from '../../store';
 import { Post, Comment } from '../../models';
-import { switchMap, filter } from 'rxjs/operators';
+import { switchMap, filter, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -26,7 +26,8 @@ export class PostShowPageComponent implements OnInit {
       switchMap(post => this.store.select(getPostCommentEntities(post.id)))
     );
     this.comments$ = this.post$.pipe(
-      switchMap(post => this.store.select(getPostComments(post.id)))
+      switchMap(post => this.store.select(getPostComments(post.id))),
+      map(comments => comments.filter(comment => comment.parentIds.length === 0))
     );
   }
 }

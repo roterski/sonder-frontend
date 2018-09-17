@@ -22,14 +22,14 @@ export const getCommentsByPost = (postId) => {
 export const getCommentsByPostLoaded = (postId) => {
   return createSelector(
     getCommentsByPost(postId),
-    (commentsByPost: CommentIds) => commentsByPost === undefined ? false : commentsByPost.loaded
+    (commentsByPost: CommentIds) => commentsByPost && commentsByPost.loaded
   );
 };
 
 export const getCommentsByPostIds = (postId) => {
   return createSelector(
     getCommentsByPost(postId),
-    (commentsByPost: CommentIds) => commentsByPost.ids
+    (commentsByPost: CommentIds) => commentsByPost && commentsByPost.ids
   );
 };
 
@@ -38,7 +38,7 @@ export const getPostCommentEntities = (postId) => {
     selectCommentEntities,
     getCommentsByPost(postId),
     (commentEntities, commentIds) => {
-      return commentIds.ids.reduce((acc, id) => {
+      return commentIds && commentIds.ids.reduce((acc, id) => {
         acc[id] = commentEntities[id];
         return acc;
       }, {});
@@ -49,6 +49,6 @@ export const getPostComments = (postId) => {
   return createSelector(
     selectCommentEntities,
     getCommentsByPostIds(postId),
-    (commentEntities, commentIds: number[]) => commentIds.map(id => commentEntities[id])
+    (commentEntities, commentIds: number[]) => commentIds && commentIds.map(id => commentEntities[id])
   );
 };

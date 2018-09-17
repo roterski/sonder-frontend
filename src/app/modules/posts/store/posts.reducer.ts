@@ -74,8 +74,8 @@ function appendChildrenIds(entities) {
     entity.childrenIds = entity.childrenIds || [];
     const parentId = entities[id].parentIds.slice(-1)[0];
     if (parentId) {
-      entities[parentId].childrenIds = entities[parentId].childrenIds || [];
-      entities[parentId].childrenIds.push(parseInt(id, 10));
+      const childrenIds = [parseInt(id, 10), ...entities[parentId].childrenIds];
+      entities[parentId].childrenIds = Array.from(new Set(childrenIds)); // unique values
     }
   });
 }
