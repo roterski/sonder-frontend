@@ -18,6 +18,7 @@ import { PostShowPageComponent } from './containers/post-show-page/post-show-pag
 import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { CommentTreeComponent } from './components/comment-tree/comment-tree.component';
+import { PostItemComponent } from './components/post-item/post-item.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,7 @@ import { CommentTreeComponent } from './components/comment-tree/comment-tree.com
     MatTreeModule,
     ReactiveFormsModule
   ],
-  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent, CommentTreeComponent],
+  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent, CommentTreeComponent, PostItemComponent],
   providers: [PostsService]
 })
 export class PostsModule { }
