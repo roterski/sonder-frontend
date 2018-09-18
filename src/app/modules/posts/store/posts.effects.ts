@@ -11,7 +11,13 @@ import {
   PostCreationFailed,
   LoadPosts,
   LoadPostComments,
-  PostCommentsLoaded} from './posts.actions';
+  PostCommentsLoaded,
+  UpvotePost,
+  PostUpvoted,
+  DownvotePost,
+  PostDownvoted,
+  RevokePostVote,
+  PostVoteRevoked } from './posts.actions';
 import { map, tap, catchError, exhaustMap, mergeMap, switchMap, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Post, Comment } from '../models';
@@ -27,8 +33,8 @@ export class PostsEffects {
     ofType(PostsActionTypes.LoadPosts),
     switchMap((action: LoadPosts) => {
       return this.postsService
-          .getPosts()
-          .pipe(tap((posts: Post[]) => this.store.dispatch(new PostsLoaded({ posts }))));
+        .getPosts()
+        .pipe(tap((posts: Post[]) => this.store.dispatch(new PostsLoaded({ posts }))));
     })
   );
 
@@ -37,8 +43,8 @@ export class PostsEffects {
     ofType(PostsActionTypes.LoadPost),
     switchMap((action: LoadPost) => {
       return this.postsService
-          .getPost(action.payload.postId)
-          .pipe(tap((post: Post) => this.store.dispatch(new PostLoaded({ post }))));
+        .getPost(action.payload.postId)
+        .pipe(tap((post: Post) => this.store.dispatch(new PostLoaded({ post }))));
     })
   );
 
@@ -68,14 +74,46 @@ export class PostsEffects {
     ofType(PostsActionTypes.LoadPostComments),
     map((action: LoadPostComments) => action.payload.postId),
     switchMap((postId: number) => {
-      return this
-        .postsService
+      return this.postsService
         .getPostComments(postId)
         .pipe(
           tap((comments: Comment[]) => {
             return this.store.dispatch(new PostCommentsLoaded({ comments, postId }));
           })
         );
+    })
+  );
+
+  @Effect()
+  upvotePost$ = this.actions$.pipe(
+    ofType(PostsActionTypes.UpvotePost),
+    map((action: UpvotePost) => action.payload.postId),
+    mergeMap((postId: number) => {
+      return this.postsService
+        .upvote('posts', postId)
+        .pipe(map(data => new PostUpvoted({ postId, points: data.points })));
+    })
+  );
+
+  @Effect()
+  downvotePost$ = this.actions$.pipe(
+    ofType(PostsActionTypes.DownvotePost),
+    map((action: DownvotePost) => action.payload.postId),
+    mergeMap((postId: number) => {
+      return this.postsService
+        .downvote('posts', postId)
+        .pipe(map(data => new PostDownvoted({ postId, points: data.points })));
+    })
+  );
+
+  @Effect()
+  revotePostVote$ = this.actions$.pipe(
+    ofType(PostsActionTypes.RevokePostVote),
+    map((action: RevokePostVote) => action.payload.postId),
+    mergeMap((postId: number) => {
+      return this.postsService
+        .revokeVote('posts', postId)
+        .pipe(map(data => new PostVoteRevoked({ postId, points: data.points })));
     })
   );
 

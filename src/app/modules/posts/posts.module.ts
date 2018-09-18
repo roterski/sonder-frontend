@@ -13,12 +13,14 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatTreeModule } from '@angular/material';
+  MatTreeModule,
+  MatIconModule } from '@angular/material';
 import { PostShowPageComponent } from './containers/post-show-page/post-show-page.component';
 import { NewPostPageComponent } from './containers/new-post-page/new-post-page.component';
 import { PostFormComponent } from './components/post-form/post-form.component';
 import { CommentTreeComponent } from './components/comment-tree/comment-tree.component';
 import { PostItemComponent } from './components/post-item/post-item.component';
+import { VoteButtonsComponent } from './components/vote-buttons/vote-buttons.component';
 
 @NgModule({
   imports: [
@@ -32,9 +34,18 @@ import { PostItemComponent } from './components/post-item/post-item.component';
     MatInputModule,
     MatButtonModule,
     MatTreeModule,
+    MatIconModule,
     ReactiveFormsModule
   ],
-  declarations: [PostsListPageComponent, PostShowPageComponent, NewPostPageComponent, PostFormComponent, CommentTreeComponent, PostItemComponent],
+  declarations: [
+    PostsListPageComponent,
+    PostShowPageComponent,
+    NewPostPageComponent,
+    PostFormComponent,
+    CommentTreeComponent,
+    PostItemComponent,
+    VoteButtonsComponent
+  ],
   providers: [PostsService]
 })
 export class PostsModule { }

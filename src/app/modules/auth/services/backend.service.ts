@@ -20,7 +20,7 @@ export class BackendService {
     });
   }
 
-  post(path: string, data: any): Observable<any> {
+  post(path: string, data: any = {}): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
       return this.http.post(this.url(path), data, headers);
     });

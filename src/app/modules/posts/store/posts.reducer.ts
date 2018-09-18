@@ -62,7 +62,48 @@ export function reducer(state = initialState, action: PostsActions): PostsState 
           }
         }
       };
-
+    case PostsActionTypes.PostUpvoted:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          entities: {
+            ...state.posts.entities,
+            [action.payload.postId]: {
+              ...state.posts.entities[action.payload.postId],
+              points: action.payload.points
+            }
+          }
+        }
+      };
+    case PostsActionTypes.PostDownvoted:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          entities: {
+            ...state.posts.entities,
+            [action.payload.postId]: {
+              ...state.posts.entities[action.payload.postId],
+              points: action.payload.points
+            }
+          }
+        }
+      };
+    case PostsActionTypes.PostUpvoted:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          entities: {
+            ...state.posts.entities,
+            [action.payload.postId]: {
+              ...state.posts.entities[action.payload.postId],
+              points: action.payload.points
+            }
+          }
+        }
+      };
     default:
       return state;
   }

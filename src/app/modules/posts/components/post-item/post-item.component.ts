@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { PostsState, UpvotePost, RevokePostVote, DownvotePost } from '../../store';
+import { Post } from '../../models';
 
 @Component({
   selector: 'app-post-item',
@@ -6,10 +9,27 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./post-item.component.scss']
 })
 export class PostItemComponent implements OnInit {
+  @Input() post: Post;
+  @Input() voted: number;
 
-  constructor() { }
+  constructor(private store: Store<PostsState>) { }
 
   ngOnInit() {
   }
 
+  upvote() {
+    if (this.voted > 0) {
+      this.store.dispatch(new RevokePostVote({ postId: this.post.id}));
+    } else {
+      this.store.dispatch(new UpvotePost({ postId: this.post.id }));
+    }
+  }
+
+  downvote() {
+    if (this.voted < 0) {
+      this.store.dispatch(new RevokePostVote({ postId: this.post.id }));
+    } else {
+      this.store.dispatch(new DownvotePost({ postId: this.post.id }));
+    }
+  }
 }

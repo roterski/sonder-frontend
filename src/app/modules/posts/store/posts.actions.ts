@@ -17,6 +17,15 @@ export enum PostsActionTypes {
 
   CreateComment = '[Posts] Create Comment',
   CommentCreated = '[Posts] Comment Created',
+
+  UpvotePost = '[Posts] Upvote Post',
+  PostUpvoted = '[Posts] Post Upvoted',
+
+  DownvotePost = '[Posts] Downvote Post',
+  PostDownvoted = '[Posts] Post Downvoted',
+
+  RevokePostVote = '[Posts] Revoke Post Vote',
+  PostVoteRevoked = '[Posts] Post Vote Revoked'
 }
 
 export class LoadPosts implements Action {
@@ -67,6 +76,33 @@ export class CommentCreated implements Action {
   constructor(public payload: { comment: Comment, postId: number }) {}
 }
 
+export class UpvotePost implements Action {
+  readonly type = PostsActionTypes.UpvotePost;
+  constructor(public payload: { postId: number }) { }
+}
+export class PostUpvoted implements Action {
+  readonly type = PostsActionTypes.PostUpvoted;
+  constructor(public payload: { postId: number, points: number }) { }
+}
+
+export class DownvotePost implements Action {
+  readonly type = PostsActionTypes.DownvotePost;
+  constructor(public payload: { postId: number }) { }
+}
+export class PostDownvoted implements Action {
+  readonly type = PostsActionTypes.PostDownvoted;
+  constructor(public payload: { postId: number, points: number }) { }
+}
+
+export class RevokePostVote implements Action {
+  readonly type = PostsActionTypes.RevokePostVote;
+  constructor(public payload: { postId: number }) { }
+}
+export class PostVoteRevoked implements Action {
+  readonly type = PostsActionTypes.PostVoteRevoked;
+  constructor(public payload: { postId: number, points: number }) { }
+}
+
 export type PostsActions =
   | LoadPosts
   | PostsLoaded
@@ -78,4 +114,10 @@ export type PostsActions =
   | LoadPostComments
   | PostCommentsLoaded
   | CreateComment
-  | CommentCreated;
+  | CommentCreated
+  | UpvotePost
+  | PostUpvoted
+  | DownvotePost
+  | PostDownvoted
+  | RevokePostVote
+  | PostVoteRevoked;
