@@ -4,6 +4,7 @@ import { Post, Comment } from '../models';
 export interface PostsState {
   readonly posts: PostEntities;
   readonly comments: CommentEntities;
+  readonly postVotes: PostVotes;
   readonly commentsByPost: { [postId: number]: CommentIds };
   readonly newPost: NewPost;
 }
@@ -25,6 +26,11 @@ export interface NewPost {
   errors: any;
 }
 
+export interface PostVotes {
+  votes: { [postId: number]: -1 | 0 | 1 };
+  loaded: boolean;
+}
+
 export const postAdapter: EntityAdapter<Post> = createEntityAdapter<Post>({
   sortComparer: sortByPoints
 });
@@ -40,6 +46,10 @@ export const initialState: PostsState = {
   newPost: {
     data: new Post(),
     errors: null
+  },
+  postVotes: {
+    votes: {},
+    loaded: false
   }
 };
 

@@ -17,11 +17,13 @@ import {
   DownvotePost,
   PostDownvoted,
   RevokePostVote,
-  PostVoteRevoked } from './posts.actions';
+  PostVoteRevoked,
+  LoadPostVotes,
+  PostVotesLoaded } from './posts.actions';
 import { map, tap, catchError, exhaustMap, mergeMap, switchMap, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { Post, Comment } from '../models';
-import { PostsService } from '../services/posts.service';
+import { Post, Comment, Vote } from '../models';
+import { PostsService, VotesService } from '../services';
 import { PostsState } from './posts.interfaces';
 import { Router } from '@angular/router';
 
@@ -89,7 +91,7 @@ export class PostsEffects {
     ofType(PostsActionTypes.UpvotePost),
     map((action: UpvotePost) => action.payload.postId),
     mergeMap((postId: number) => {
-      return this.postsService
+      return this.votesService
         .upvote('posts', postId)
         .pipe(map(data => new PostUpvoted({ postId, points: data.points })));
     })
@@ -100,7 +102,7 @@ export class PostsEffects {
     ofType(PostsActionTypes.DownvotePost),
     map((action: DownvotePost) => action.payload.postId),
     mergeMap((postId: number) => {
-      return this.postsService
+      return this.votesService
         .downvote('posts', postId)
         .pipe(map(data => new PostDownvoted({ postId, points: data.points })));
     })
@@ -111,15 +113,26 @@ export class PostsEffects {
     ofType(PostsActionTypes.RevokePostVote),
     map((action: RevokePostVote) => action.payload.postId),
     mergeMap((postId: number) => {
-      return this.postsService
+      return this.votesService
         .revokeVote('posts', postId)
         .pipe(map(data => new PostVoteRevoked({ postId, points: data.points })));
+    })
+  );
+
+  @Effect({ dispatch: false })
+  loadPostVotes$ = this.actions$.pipe(
+    ofType(PostsActionTypes.LoadPostVotes),
+    switchMap((action: LoadPostVotes) => {
+      return this.votesService
+        .getPostVotes()
+        .pipe(tap((votes: Vote[]) => this.store.dispatch(new PostVotesLoaded({ votes }))));
     })
   );
 
   constructor(
     private actions$: Actions,
     private postsService: PostsService,
+    private votesService: VotesService,
     private router: Router,
     private store: Store<PostsState>) {}
 }

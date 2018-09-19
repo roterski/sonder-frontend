@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Post, Comment } from '../models';
+import { Post, Comment, Vote } from '../models';
 
 export enum PostsActionTypes {
   LoadPosts = '[Posts] Load Posts',
@@ -25,7 +25,10 @@ export enum PostsActionTypes {
   PostDownvoted = '[Posts] Post Downvoted',
 
   RevokePostVote = '[Posts] Revoke Post Vote',
-  PostVoteRevoked = '[Posts] Post Vote Revoked'
+  PostVoteRevoked = '[Posts] Post Vote Revoked',
+
+  LoadPostVotes = '[Posts] Load Post Votes',
+  PostVotesLoaded = '[Posts] Post Votes Loaded'
 }
 
 export class LoadPosts implements Action {
@@ -101,6 +104,14 @@ export class RevokePostVote implements Action {
 export class PostVoteRevoked implements Action {
   readonly type = PostsActionTypes.PostVoteRevoked;
   constructor(public payload: { postId: number, points: number }) { }
+}
+
+export class LoadPostVotes implements Action {
+  readonly type = PostsActionTypes.LoadPostVotes;
+}
+export class PostVotesLoaded implements Action {
+  readonly type = PostsActionTypes.PostVoteRevoked;
+  constructor(public payload: { votes: Vote[] }) { }
 }
 
 export type PostsActions =

@@ -7,12 +7,12 @@ import {
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap, filter, take, catchError } from 'rxjs/operators';
-import { PostsState, getPostsLoaded, LoadPosts } from '../store';
+import { PostsState, getPostVotesLoaded, LoadPostVotes } from '../store';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostsLoadedGuard implements CanActivate {
+export class PostVotesLoadedGuard implements CanActivate {
   constructor(private store: Store<PostsState>) { }
 
   canActivate(
@@ -26,10 +26,10 @@ export class PostsLoadedGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(getPostsLoaded).pipe(
+    return this.store.select(getPostVotesLoaded).pipe(
       tap(loaded => {
         if (!loaded) {
-          this.store.dispatch(new LoadPosts());
+          this.store.dispatch(new LoadPostVotes());
         }
       }),
       filter(loaded => loaded),

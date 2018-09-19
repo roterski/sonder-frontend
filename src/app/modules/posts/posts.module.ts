@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { reducer, PostsEffects } from './store';
 import { EffectsModule } from '@ngrx/effects';
 import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
-import { PostsService } from './services/posts.service';
+import { PostsService, VotesService } from './services';
 import {
   MatListModule,
   MatButtonModule,
@@ -46,6 +46,9 @@ import { VoteButtonsComponent } from './components/vote-buttons/vote-buttons.com
     PostItemComponent,
     VoteButtonsComponent
   ],
-  providers: [PostsService]
+  providers: [
+    PostsService,
+    VotesService
+  ]
 })
 export class PostsModule { }
