@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Observable, throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { AuthState, getBackendAuthToken } from '../reducers/auth.reducer';
 import { switchMap } from 'rxjs/operators';
 import { map, catchError, concat, mergeMap } from 'rxjs/operators';
-import { AuthenticationFailed } from '../actions/auth.actions';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
-  constructor(private http: HttpClient, private store: Store<AuthState>) { }
+  constructor(private http: HttpClient) { }
 
   get(path: string): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
@@ -42,18 +39,19 @@ export class BackendService {
   }
 
   private performAuthenticatedRequest(requestMethod): Observable<any> {
-    return this.store.select(getBackendAuthToken).pipe(
-      switchMap((token: string) => {
-        return requestMethod(this.headers(token)).pipe(
-          catchError(error => {
-            if (error.status == '401') {
-              this.store.dispatch(new AuthenticationFailed());
-            }
-            return this.rethrow(error);
-          })
-        );
-      })
-    );
+      return of(false);
+    // return this.store.select(getBackendAuthToken).pipe(
+    //   switchMap((token: string) => {
+    //     return requestMethod(this.headers(token)).pipe(
+    //       catchError(error => {
+    //         if (error.status == '401') {
+    //           // this.store.dispatch(new AuthenticationFailed());
+    //         }
+    //         return this.rethrow(error);
+    //       })
+    //     );
+    //   })
+    // );
   }
 
   private url(path) {

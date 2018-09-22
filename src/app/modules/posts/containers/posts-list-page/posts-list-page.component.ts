@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { PostsState, selectAllPosts } from '../../store';
 import { Post } from '../../models';
 
 @Component({
@@ -12,10 +10,10 @@ import { Post } from '../../models';
 export class PostsListPageComponent implements OnInit {
   public posts$: Observable<Post[]>;
 
-  constructor(private store: Store<PostsState>) { }
+  constructor() { }
 
   ngOnInit() {
-    this.posts$ = this.store.select(selectAllPosts);
+    // this.posts$ = this.store.select(selectAllPosts);
   }
 
 }

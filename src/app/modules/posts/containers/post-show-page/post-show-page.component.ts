@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { PostsState, getSelectedPost, getPostCommentEntities, getPostComments } from '../../store';
 import { Post, Comment } from '../../models';
 import { switchMap, filter, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -15,19 +13,19 @@ export class PostShowPageComponent implements OnInit {
   comments$: Observable<Comment[]>;
   commentEntities$: Observable<any>;
 
-  constructor(private store: Store<PostsState>) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.post$ = this.store.select(getSelectedPost).pipe(
-      filter(post => post !== undefined)
-    );
-    this.commentEntities$ = this.post$.pipe(
-      switchMap(post => this.store.select(getPostCommentEntities(post.id)))
-    );
-    this.comments$ = this.post$.pipe(
-      switchMap(post => this.store.select(getPostComments(post.id))),
-      map(comments => comments.filter(comment => comment.parentIds.length === 0))
-    );
+    // this.post$ = this.store.select(getSelectedPost).pipe(
+    //   filter(post => post !== undefined)
+    // );
+    // this.commentEntities$ = this.post$.pipe(
+    //   switchMap(post => this.store.select(getPostCommentEntities(post.id)))
+    // );
+    // this.comments$ = this.post$.pipe(
+    //   switchMap(post => this.store.select(getPostComments(post.id))),
+    //   map(comments => comments.filter(comment => comment.parentIds.length === 0))
+    // );
   }
 }

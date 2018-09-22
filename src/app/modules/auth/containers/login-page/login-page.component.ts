@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { AuthState } from '../../reducers/auth.reducer';
-import { LogIn } from '../../actions/auth.actions';
 
 @Component({
   selector: 'app-login-page',
@@ -10,12 +7,12 @@ import { LogIn } from '../../actions/auth.actions';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor(private store: Store<AuthState>) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
   logIn() {
-    this.store.dispatch(new LogIn);
+    // this.store.dispatch(new LogIn);
   }
 }

@@ -1,9 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
-import { reducer } from './reducers/auth.reducer';
-import { EffectsModule } from '@ngrx/effects';
-import { AuthEffects } from './effects/auth.effects';
 import { FacebookService } from 'ngx-facebook';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginPageComponent } from './containers/login-page/login-page.component';
@@ -14,8 +10,6 @@ import { MatCardModule, MatButtonModule } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.forFeature('auth', reducer),
-    EffectsModule.forFeature([AuthEffects]),
     AuthRoutingModule,
     HttpClientModule,
     MatCardModule,

@@ -4,16 +4,14 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot
 } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { switchMap, tap, filter, take, catchError } from 'rxjs/operators';
-import { PostsState, getPostsLoaded, LoadPosts } from '../store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostsLoadedGuard implements CanActivate {
-  constructor(private store: Store<PostsState>) { }
+  constructor() { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -26,14 +24,15 @@ export class PostsLoadedGuard implements CanActivate {
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(getPostsLoaded).pipe(
-      tap(loaded => {
-        if (!loaded) {
-          this.store.dispatch(new LoadPosts());
-        }
-      }),
-      filter(loaded => loaded),
-      take(1)
-    );
+    return of(true);
+    // return this.store.select(getPostsLoaded).pipe(
+    //   tap(loaded => {
+    //     if (!loaded) {
+    //       this.store.dispatch(new LoadPosts());
+    //     }
+    //   }),
+    //   filter(loaded => loaded),
+    //   take(1)
+    // );
   }
 }

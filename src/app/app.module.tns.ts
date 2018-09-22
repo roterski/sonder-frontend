@@ -4,12 +4,7 @@ import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './store/app.reducers';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AuthModule } from './modules/auth/auth.module';
-import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './store/app.effects';
 import { environment } from '../environments/environment';
 import 'nativescript-localstorage';
 import { NativeScriptFacebookModule } from 'nativescript-facebook/angular';
@@ -32,9 +27,6 @@ import { AuthenticatedAppComponent } from './components/authenticated-app/authen
   imports: [
     NativeScriptModule,
     AppRoutingModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([AppEffects]),
     NativeScriptFacebookModule,
     AuthModule
   ],

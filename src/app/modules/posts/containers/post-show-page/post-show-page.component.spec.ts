@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostShowPageComponent } from './post-show-page.component';
-import { Store, StoreModule } from '@ngrx/store';
 
 describe('PostShowPageComponent', () => {
   let component: PostShowPageComponent;
   let fixture: ComponentFixture<PostShowPageComponent>;
-  let store: Store<any>;
+  // let store: Store<any>;
 
   beforeEach(async() => {
     TestBed.configureTestingModule({
@@ -20,9 +19,9 @@ describe('PostShowPageComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PostShowPageComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
+    // store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    // spyOn(store, 'dispatch').and.callThrough();
     fixture.detectChanges();
   });
 

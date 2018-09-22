@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { StoreModule } from '@ngrx/store';
 import { ReactiveFormsModule } from '@angular/forms';
-import { reducer, PostsEffects } from './store';
-import { EffectsModule } from '@ngrx/effects';
 import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
 import { PostsService, VotesService } from './services';
 import {
@@ -26,8 +23,6 @@ import { VoteButtonsComponent } from './components/vote-buttons/vote-buttons.com
   imports: [
     CommonModule,
     RouterModule,
-    StoreModule.forFeature('posts', reducer),
-    EffectsModule.forFeature([PostsEffects]),
     MatListModule,
     MatCardModule,
     MatFormFieldModule,
