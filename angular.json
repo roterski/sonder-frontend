@@ -9,6 +9,9 @@
       "projectType": "application",
       "prefix": "app",
       "schematics": {
+        "akita-schematics:component": {
+          "styleext": "scss"
+        }
       },
       "architect": {
         "build": {
@@ -130,5 +133,8 @@
       }
     }
   },
-  "defaultProject": "sonder_frontend"
+  "defaultProject": "sonder_frontend",
+  "cli": {
+    "defaultCollection": "akita-schematics"
+  }
 }
