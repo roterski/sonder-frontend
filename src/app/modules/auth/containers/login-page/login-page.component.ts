@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionService } from '../../state';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
@@ -7,12 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sessionService: SessionService, private router: Router) { }
 
   ngOnInit() {
   }
 
   logIn() {
-    // this.store.dispatch(new LogIn);
+    this.sessionService.logIn().subscribe(() => this.router.navigate(['/']));
   }
 }

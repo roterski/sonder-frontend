@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { BottomButtonsComponent } from './components/bottom-buttons/bottom-butto
   imports: [
     BrowserModule,
     AppRoutingModule,
+    environment.production ? [] : AkitaNgDevtools.forRoot(),
     AuthModule,
     PostsModule,
     BrowserAnimationsModule,

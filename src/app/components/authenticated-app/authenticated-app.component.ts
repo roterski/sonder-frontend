@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { SessionQuery, SessionState, SessionService } from '../../modules/auth/state';
 
 @Component({
   selector: 'app-authenticated-app',
@@ -9,13 +11,17 @@ import { Observable } from 'rxjs';
 export class AuthenticatedAppComponent implements OnInit {
   public loggedIn$: Observable<boolean>;
 
-  constructor() { }
+  constructor(
+    private sessionQuery: SessionQuery,
+    private sessionService: SessionService,
+    private router: Router) { }
 
   ngOnInit() {
-    // this.loggedIn$ = this.store.select(getLoggedIn);
+    this.loggedIn$ = this.sessionQuery.isLoggedIn$;
   }
 
   logOut() {
-    // this.store.dispatch(new LogOut());
+    this.sessionService.logOut();
+    this.router.navigate(['/login']);
   }
 }

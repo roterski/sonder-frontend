@@ -314,6 +314,12 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@datorama/akita-ngdevtools@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@datorama/akita-ngdevtools/-/akita-ngdevtools-1.0.2.tgz#c8a2c0e33392cd9fc87e657edcac000856946ea9"
+  dependencies:
+    tslib "^1.9.0"
+
 "@datorama/akita@^1.9.3":
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/@datorama/akita/-/akita-1.9.3.tgz#f7e5bf57e31ee73e07222195dc144873fceb0ec7"
@@ -7446,7 +7452,7 @@ rxjs@^5.5.2:
   dependencies:
     symbol-observable "1.0.1"
 
-rxjs@^6.0.0, rxjs@^6.1.0:
+rxjs@^6.0.0, rxjs@^6.1.0, rxjs@^6.2.2:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.3.2.tgz#6a688b16c4e6e980e62ea805ec30648e1c60907f"
   dependencies:
