@@ -1,3 +1,13 @@
-<mat-nav-list role="list" *ngFor="let post of (posts$ | async)">
-  <app-post-item [post]="post"></app-post-item>
-</mat-nav-list>
+<ng-template [ngIf]="loading$ | async" [ngIfElse]="loaded">
+  <mat-card>
+    <mat-card-title>
+      LOADING...
+    </mat-card-title>
+  </mat-card>
+</ng-template>
+
+<ng-template #loaded>
+  <mat-nav-list role="list" *ngFor="let post of (posts$ | async)">
+    <app-post-item [post]="post"></app-post-item>
+  </mat-nav-list>
+</ng-template>

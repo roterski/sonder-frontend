@@ -10,7 +10,7 @@ if (environment.production) {
   enableAkitaProdMode();
 }
 
-persistState();
+persistState({ include: ['session'] });
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));

@@ -7,7 +7,7 @@ import { BackendService } from '../../auth/services/backend.service';
 @Injectable({
   providedIn: 'root'
 })
-export class VotesService {
+export class VotesApiService {
   constructor(private backend: BackendService) { }
 
   getPostVotes(): Observable<Vote[]> {

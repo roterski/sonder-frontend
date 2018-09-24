@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Store, StoreConfig } from '@datorama/akita';
-// import * as storage from '../storage';
+import { Store, StoreConfig, applyAction } from '@datorama/akita';
 
 export interface SessionState {
   facebookAccessToken: string;
@@ -10,8 +9,7 @@ export interface SessionState {
 export function createInitialState(): SessionState {
   return {
     facebookAccessToken: null,
-    backendAuthToken: null,
-    // ...storage.getSession()
+    backendAuthToken: null
   };
 }
 
@@ -24,17 +22,19 @@ export class SessionStore extends Store<SessionState> {
   }
 
   authenticateFacebook(facebookAccessToken: string) {
-    this.update({ facebookAccessToken });
-    // storage.saveSession({ facebookAccessToken });
+    applyAction(() => this.update({ facebookAccessToken }),
+      { type: 'Facebook Authenticated' });
   }
 
   authenticateBackend(backendAuthToken: string) {
-    this.update({ backendAuthToken });
-    // storage.saveSession({ backendAuthToken });
+    applyAction(() => this.update({ backendAuthToken }),
+      { type: 'Logged In'});
   }
 
   logOut() {
-    // storage.clearSession();
-    this.update(createInitialState());
+    applyAction(() => this.setState((state) => {
+      return createInitialState();
+    }),
+      { type: 'Logged Out' });
   }
 }

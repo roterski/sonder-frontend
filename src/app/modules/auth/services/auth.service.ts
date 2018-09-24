@@ -9,7 +9,9 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private facebookService: FacebookService) {
+  constructor(
+    private http: HttpClient,
+    private facebookService: FacebookService) {
     const params: InitParams = {
       version: 'v2.10',
       appId: environment.facebookAppId

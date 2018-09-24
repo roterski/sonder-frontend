@@ -5,7 +5,7 @@ import { Post } from '../models';
 import { BackendService } from '../../auth/services/backend.service';
 
 @Injectable()
-export class PostsService {
+export class PostsApiService {
   constructor(private backend: BackendService) {}
 
   getPosts(): Observable<Post[]> {

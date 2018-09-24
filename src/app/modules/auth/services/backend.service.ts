@@ -2,14 +2,18 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { map, catchError, concat, mergeMap } from 'rxjs/operators';
+import { map, catchError, concat, mergeMap, delay } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
+import { SessionQuery } from '../state/session.query';
+import { SessionState } from '../state/session.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BackendService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private sessionQuery: SessionQuery) { }
 
   get(path: string): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
@@ -39,19 +43,13 @@ export class BackendService {
   }
 
   private performAuthenticatedRequest(requestMethod): Observable<any> {
-      return of(false);
-    // return this.store.select(getBackendAuthToken).pipe(
-    //   switchMap((token: string) => {
-    //     return requestMethod(this.headers(token)).pipe(
-    //       catchError(error => {
-    //         if (error.status == '401') {
-    //           // this.store.dispatch(new AuthenticationFailed());
-    //         }
-    //         return this.rethrow(error);
-    //       })
-    //     );
-    //   })
-    // );
+      return this
+        .sessionQuery
+        .select((session: SessionState) => session.backendAuthToken)
+        .pipe(
+          // delay(environment.production ? 0 : 2000), // DEVELOPMENT_ONLY
+          switchMap((token: string) => requestMethod(this.headers(token)))
+        );
   }
 
   private url(path) {

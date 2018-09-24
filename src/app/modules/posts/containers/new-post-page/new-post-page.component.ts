@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PostsService } from '../../services';
 import { Post } from '../../models';
 
 @Component({
@@ -18,8 +17,7 @@ export class NewPostPageComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
-    private postsService: PostsService) { }
+    private router: Router) { }
 
   ngOnInit() {
     // this.post$ = this.store.select(getNewPostData);

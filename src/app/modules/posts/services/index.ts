@@ -1,2 +1,2 @@
-export * from './posts.service';
-export * from './votes.service';
+export * from './postsApi.service';
+export * from './votesApi.service';

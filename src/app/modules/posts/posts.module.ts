@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PostsListPageComponent } from './containers/posts-list-page/posts-list-page.component';
-import { PostsService, VotesService } from './services';
+import { PostsApiService, VotesApiService } from './services';
 import {
   MatListModule,
   MatButtonModule,
@@ -42,8 +42,8 @@ import { VoteButtonsComponent } from './components/vote-buttons/vote-buttons.com
     VoteButtonsComponent
   ],
   providers: [
-    PostsService,
-    VotesService
+    PostsApiService,
+    VotesApiService
   ]
 })
 export class PostsModule { }

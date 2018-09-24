@@ -314,6 +314,12 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@datorama/akita-ng-router-store@^1.0.0-rc.2":
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/@datorama/akita-ng-router-store/-/akita-ng-router-store-1.0.0-rc.2.tgz#dbbd1104f4fbe258149ad8f8e96348c93d22f8cd"
+  dependencies:
+    tslib "^1.9.0"
+
 "@datorama/akita-ngdevtools@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@datorama/akita-ngdevtools/-/akita-ngdevtools-1.0.2.tgz#c8a2c0e33392cd9fc87e657edcac000856946ea9"
