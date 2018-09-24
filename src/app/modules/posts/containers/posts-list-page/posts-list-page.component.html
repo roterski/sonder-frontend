@@ -1,9 +1,5 @@
 <ng-template [ngIf]="loading$ | async" [ngIfElse]="loaded">
-  <mat-card>
-    <mat-card-title>
-      LOADING...
-    </mat-card-title>
-  </mat-card>
+  <app-loading-splash></app-loading-splash>
 </ng-template>
 
 <ng-template #loaded>
