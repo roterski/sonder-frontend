@@ -1,7 +1,20 @@
 <mat-card>
-  <app-post-form
-    [post]="post$ | async"
-    [errors]="errors$ | async"
-    (submitted)="createPost($event)">
-  </app-post-form>
+  <form [formGroup]="postForm">
+    <mat-card-title>
+      <mat-form-field class="form-group">
+        <input matInput placeholder="Post Title" class="form-control" formControlName="title" required>
+      </mat-form-field>
+      <mat-error *ngIf="(errors$ | async) && (errors$ | async).title">{{(errors$ | async).title}}</mat-error>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-form-field>
+        <textarea matInput placeholder="Post Content" class="form-control" formControlName="body"></textarea>
+      </mat-form-field>
+      <mat-error *ngIf="(errors$ | async) && (errors$ | async).body">{{(errors$ | async).body}}</mat-error>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button (click)="createPost()">Create</button>
+      <mat-error *ngIf="(errors$ | async)">Something went wrong. 😓</mat-error>
+    </mat-card-actions>
+  </form>
 </mat-card>

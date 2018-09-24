@@ -14,6 +14,9 @@ export interface Post {
 export function createPost(params: Partial<Post>) {
   return {
     title: '',
-    body: ''
+    body: '',
+    points: 0,
+    voted: 0,
+    commentCount: 0
   } as Post;
 }

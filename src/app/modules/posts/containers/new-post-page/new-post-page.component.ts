@@ -1,30 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
+import { PersistNgFormPlugin } from '@datorama/akita';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Post } from '../../models';
+
+import { Post, createPost, PostsQuery, PostsService } from '../../state';
 
 @Component({
   selector: 'app-new-post-page',
   templateUrl: './new-post-page.component.html',
   styleUrls: ['./new-post-page.component.css']
 })
-export class NewPostPageComponent implements OnInit {
+export class NewPostPageComponent implements OnInit, OnDestroy {
   postForm: FormGroup;
   errors$: Observable<object>;
   post$: Observable<Post>;
+  persistForm: PersistNgFormPlugin<Post>;
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router) { }
+    private router: Router,
+    private postsQuery: PostsQuery,
+    private postsService: PostsService) { }
 
   ngOnInit() {
-    // this.post$ = this.store.select(getNewPostData);
-    // this.errors$ = this.store.select(getNewPostErrors);
+    this.createForm();
+    this.errors$ = this.postsQuery.selectError();
   }
 
-  createPost(post: Post) {
-    // this.store.dispatch(new CreatePost({ post: post }));
+  createForm() {
+    this.postForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      body: ['']
+    });
+    this.persistForm = new PersistNgFormPlugin(
+        this.postsQuery,
+        createPost,
+        { formKey: 'newPostForm' }
+      ).setForm(this.postForm);
+  }
+
+  createPost() {
+    this.postsService.addPost(this.postForm.value).subscribe(() => {
+      this.router.navigate(['/']);
+      this.persistForm.reset();
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.persistForm) { this.persistForm.destroy(); }
   }
 }

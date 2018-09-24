@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Post } from '../models';
+import { Post, /*Comment TODO*/ } from '../state/post.model';
 import { BackendService } from '../../auth/services/backend.service';
 
 @Injectable()

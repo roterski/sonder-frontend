@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ID, noop } from '@datorama/akita';
 import { Post } from './post.model';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { PostsStore } from './posts.store';
 import { PostsQuery } from './posts.query';
 import { HttpClient } from '@angular/common/http';
@@ -24,10 +24,17 @@ export class PostsService {
     return this.postsQuery.isPristine ? request : noop();
   }
 
-  add() {
-    // this.http.post().subscribe((entity: ServerResponse) => {
-      // this.postsStore.add(entity);
-    // });
+  addPost(post: Post) {
+    return this.postsApi
+      .createPost(post)
+      .pipe(
+        tap((entity: Post) => this.postsStore.add(entity)),
+        catchError((catchedError: any) => {
+          const error = catchedError.error && catchedError.error.errors || catchedError;
+          this.postsStore.setError(error);
+          return of(false);
+        })
+      );
   }
 
   clearStore() {
