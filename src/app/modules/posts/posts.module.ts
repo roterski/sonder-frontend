@@ -9,7 +9,6 @@ import {
   NewPostPageComponent,
   PostsListPageComponent } from './containers';
 import {
-  PostFormComponent,
   CommentTreeComponent,
   PostItemComponent,
   VoteButtonsComponent } from './components';
@@ -26,7 +25,6 @@ import { SharedModule } from '../shared/shared.module';
     PostsListPageComponent,
     PostShowPageComponent,
     NewPostPageComponent,
-    PostFormComponent,
     CommentTreeComponent,
     PostItemComponent,
     VoteButtonsComponent

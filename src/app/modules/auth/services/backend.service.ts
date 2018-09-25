@@ -47,7 +47,7 @@ export class BackendService {
         .sessionQuery
         .select((session: SessionState) => session.backendAuthToken)
         .pipe(
-          delay(environment.production ? 0 : 2000), // DEVELOPMENT_ONLY
+          // delay(environment.production ? 0 : 1000), // DEVELOPMENT_ONLY
           switchMap((token: string) => requestMethod(this.headers(token)))
         );
   }
