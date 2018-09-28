@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap, filter, map, tap, combineLatest, catchError } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-import { Post, PostComment, PostsQuery, PostsService } from '../../state';
+import { Observable, of, Subscription } from 'rxjs';
+import { Post, PostComment, PostsQuery, PostsService, PostCommentsQuery, PostCommentsService } from '../../state';
 
 @Component({
   selector: 'app-post-show-page',
   templateUrl: './post-show-page.component.html',
   styleUrls: ['./post-show-page.component.css']
 })
-export class PostShowPageComponent implements OnInit {
+export class PostShowPageComponent implements OnInit, OnDestroy {
   post$: Observable<Post>;
-  comments$: Observable<Comment[]>;
+  comments$: Observable<PostComment[]>;
+  commentsLoaded$: Observable<boolean>;
   commentEntities$: Observable<any>;
+
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private postsQuery: PostsQuery,
+    private postCommentsQuery: PostCommentsQuery,
+    private postCommentsService: PostCommentsService,
     private postsService: PostsService) {
   }
 
@@ -26,11 +31,16 @@ export class PostShowPageComponent implements OnInit {
       map((params: { postId: string }) => parseInt(params.postId, 10))
     );
 
-    this.post$ = this.postsService.getPost(postId$).pipe(
-      catchError((error, post: Observable<Post>) => {
-        this.router.navigate(['/posts']);
-        return post;
-      })
-    );
+    this.subscriptions.push(postId$.subscribe((postId: number) => {
+      this.post$ = this.postsService.getPost(postId);
+      this.comments$ = this.postCommentsService.getPostComments(postId);
+      this.subscriptions.push(this.comments$.subscribe());
+      this.commentsLoaded$ = this.postCommentsQuery.selectPostCommentsLoaded(postId);
+      this.commentEntities$ = this.postCommentsQuery.postCommentEntities$;
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 }

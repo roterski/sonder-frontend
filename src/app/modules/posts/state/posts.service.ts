@@ -3,7 +3,7 @@ import { ID, noop } from '@datorama/akita';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from './post.model';
 import { Observable, of } from 'rxjs';
-import { tap, catchError, combineLatest, switchMap, map } from 'rxjs/operators';
+import { tap, catchError, switchMap, map } from 'rxjs/operators';
 import { PostsStore } from './posts.store';
 import { PostsQuery } from './posts.query';
 import { HttpClient } from '@angular/common/http';
@@ -22,27 +22,22 @@ export class PostsService {
   getPosts(): Observable<Post[]> {
     const request = this.postsApi
       .getPosts()
-      .pipe(tap((posts: Post[]) => this.postsStore.set(posts)));
+      .pipe(
+        tap((posts: Post[]) => this.postsStore.add(posts)),
+        tap((posts: Post[]) => this.postsStore.setLoading(false))
+      );
     return this.postsQuery.isPristine ? request : noop();
   }
 
-  getPost(postId$: Observable<number>): Observable<Post> {
-    const request = (postId) => {
-      return this.postsApi
-        .getPost(postId)
-        .pipe(tap((post: Post) => this.postsStore.add(post)));
-    };
+  getPost(postId: number): Observable<Post> {
+    const request = this.postsApi
+      .getPost(postId)
+      .pipe(tap((post: Post) => this.postsStore.add(post)));
 
-    const post$ = postId$.pipe(
-      switchMap((postId: number) => this.postsQuery.selectEntity(postId))
-    );
-
-    return postId$.pipe(
-      combineLatest(post$),
-      switchMap(([postId, post], index) => {
-        return post === undefined ? request(postId) : of(post);
-      })
-    );
+    return this.postsQuery.selectEntity(postId)
+      .pipe(
+        switchMap((post: Post) => post === undefined ? request : of(post))
+      );
   }
 
   addPost(post: Post) {

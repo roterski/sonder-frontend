@@ -1,20 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Post, Comment } from '../../models';
+import { Post, PostComment } from '../../state';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export class CommentNode {
   constructor(
-    public comment: Comment
+    public comment: PostComment
   ) {}
 }
 
 export class CommentFlatNode {
   constructor(
     public expandable: boolean,
-    public comment: Comment,
+    public comment: PostComment,
     public level: number
   ) {}
 }
@@ -25,7 +25,7 @@ export class CommentFlatNode {
   styleUrls: ['./comment-tree.component.scss']
 })
 export class CommentTreeComponent implements OnInit {
-  @Input() comments: Comment[];
+  @Input() comments: PostComment[];
   @Input() commentEntities: any;
   dataSource: MatTreeFlatDataSource<CommentNode, CommentFlatNode>;
   treeFlattener: MatTreeFlattener<CommentNode, CommentFlatNode>;
