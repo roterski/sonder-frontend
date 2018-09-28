@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { map, catchError, concat, mergeMap, delay } from 'rxjs/operators';
+import { map, catchError, concat, mergeMap, delay, filter } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { SessionQuery } from '../state/session.query';
 import { SessionState } from '../state/session.store';
@@ -47,6 +47,7 @@ export class BackendService {
         .sessionQuery
         .select((session: SessionState) => session.backendAuthToken)
         .pipe(
+          filter((token: string) => !!token),
           // delay(environment.production ? 0 : 1000), // DEVELOPMENT_ONLY
           switchMap((token: string) => requestMethod(this.headers(token)))
         );
