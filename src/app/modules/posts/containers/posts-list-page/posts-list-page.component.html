@@ -4,6 +4,6 @@
 
 <ng-template #loaded>
   <mat-nav-list role="list" *ngFor="let post of (posts$ | async)">
-    <app-post-item [post]="post"></app-post-item>
+    <app-post-item [post]="post" [voted]="(postVotes$ | async)[post.id]"></app-post-item>
   </mat-nav-list>
 </ng-template>

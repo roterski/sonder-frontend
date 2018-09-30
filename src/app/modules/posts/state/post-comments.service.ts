@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ID } from '@datorama/akita';
-import { HttpClient } from '@angular/common/http';
 import { PostCommentsStore, PostCommentsState } from './post-comments.store';
 import { PostsApiService } from '../services';
 import { PostComment } from './post-comment.model';
@@ -13,7 +12,6 @@ export class PostCommentsService {
 
   constructor(
     private postCommentsStore: PostCommentsStore,
-    private http: HttpClient,
     private postsApi: PostsApiService,
     private postCommentsQuery: PostCommentsQuery) {
   }

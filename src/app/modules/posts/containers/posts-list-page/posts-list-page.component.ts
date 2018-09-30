@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 // import { Post } from '../../models';
-import { PostsQuery, Post, PostsService } from '../../state';
+import { PostsQuery, Post, PostsService, MyVotesService, MyVotesQuery } from '../../state';
 
 @Component({
   selector: 'app-posts-list-page',
@@ -11,17 +11,27 @@ import { PostsQuery, Post, PostsService } from '../../state';
 export class PostsListPageComponent implements OnInit, OnDestroy {
   public posts$: Observable<Post[]>;
   public loading$: Observable<boolean>;
-  private postSubscription: Subscription;
+  public postVotes$: Observable<any>;
 
-  constructor(private postsQuery: PostsQuery, private postsService: PostsService) { }
+  private subscriptions: Subscription[] = [];
+
+  constructor(
+    private postsQuery: PostsQuery,
+    private postsService: PostsService,
+    private myVotesService: MyVotesService,
+    private myVotesQuery: MyVotesQuery
+  ) { }
 
   ngOnInit() {
-    this.postSubscription = this.postsService.getPosts().subscribe();
-    this.posts$ = this.postsQuery.selectAll();
+    this.posts$ = this.postsService.getPosts();
     this.loading$ = this.postsQuery.selectLoading();
+    this.postVotes$ = this.myVotesQuery.myPostVotes$;
+
+    this.subscriptions.push(this.posts$.subscribe());
+    this.subscriptions.push(this.myVotesService.getMyPostVotes().subscribe());
   }
 
   ngOnDestroy() {
-    this.postSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 }

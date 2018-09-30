@@ -2,9 +2,12 @@ import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig, getInitialActiveState } from '@datorama/akita';
 import { Post } from './post.model';
 
-export interface PostsState extends EntityState<Post> {}
+export interface PostsState extends EntityState<Post> {
+  loaded: boolean;
+}
 
 const initialState = {
+  loaded: false,
   ...getInitialActiveState()
 };
 
@@ -14,6 +17,21 @@ export class PostsStore extends EntityStore<PostsState, Post> {
 
   constructor() {
     super(initialState);
+  }
+
+  addPosts(posts: Post[]) {
+    this.add(posts);
+    this.setLoaded(true);
+  }
+
+  setLoaded(loaded: boolean) {
+    this.setState((state: PostsState) => {
+      return {
+        ...state,
+        loaded: loaded,
+        loading: !loaded
+      };
+    });
   }
 }
 

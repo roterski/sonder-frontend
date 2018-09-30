@@ -12,7 +12,7 @@ export class VotesApiService {
 
   getPostVotes(): Observable<Vote[]> {
     return this.backend
-      .get('/posts/votes')
+      .get('/votes/posts')
       .pipe(map(response => response.data));
   }
 

@@ -23,10 +23,14 @@ export class PostsService {
     const request = this.postsApi
       .getPosts()
       .pipe(
-        tap((posts: Post[]) => this.postsStore.add(posts)),
-        tap((posts: Post[]) => this.postsStore.setLoading(false))
+        tap((posts: Post[]) => this.postsStore.addPosts(posts))
       );
-    return this.postsQuery.isPristine ? request : noop();
+
+    return this.postsQuery.loaded$.pipe(
+      switchMap((loaded: boolean) => {
+        return loaded ? this.postsQuery.selectAll() : request;
+      })
+    );
   }
 
   getPost(postId: number): Observable<Post> {
