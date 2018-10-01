@@ -21,10 +21,27 @@ export class MyVotesService {
         );
   }
 
-  add() {
-    // this.http.post().subscribe((entity: ServerResponse) => {
-      // this.myVotesStore.add(entity);
-    // });
+  upvotePost(postId: ID) {
+    return this.votesApi
+      .upvote('posts', postId)
+      .pipe(
+        tap(vote => this.myVotesStore.addPostVote(vote))
+      );
   }
 
+  downvotePost(postId: ID) {
+    return this.votesApi
+      .downvote('posts', postId)
+      .pipe(
+        tap(vote => this.myVotesStore.addPostVote(vote))
+      );
+  }
+
+  revokePostVote(postId: ID) {
+    return this.votesApi
+      .revokeVote('posts', postId)
+      .pipe(
+        tap(vote => this.myVotesStore.addPostVote(vote))
+      );
+  }
 }

@@ -11,4 +11,3 @@ export * from './post-comment.model';
 export * from './my-votes.query';
 export * from './my-votes.store';
 export * from './my-votes.service';
-// export * from './vote.model';

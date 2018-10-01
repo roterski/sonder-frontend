@@ -34,6 +34,21 @@ export class MyVotesStore extends Store<MyVotesState> {
     super(createInitialState());
   }
 
+  addPostVote(vote) {
+    this.setState((state: MyVotesState) => {
+      return {
+        ...state,
+        postVotes: {
+          ...state.postVotes,
+          votes: {
+            ...state.postVotes.votes,
+            [vote.postId]: vote.points
+          }
+        }
+      };
+    });
+  }
+
   addPostVotes(votes) {
     const postVotes = votes.reduce((acc, vote) => {
       acc[vote.postId] = vote.points;

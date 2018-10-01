@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post } from '../../models';
+import { Post, MyVotesService } from '../../state';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-item',
@@ -10,24 +11,26 @@ export class PostItemComponent implements OnInit {
   @Input() post: Post;
   @Input() voted: number;
 
-  constructor() { }
+  constructor(
+    private myVotesService: MyVotesService
+  ) { }
 
   ngOnInit() {
   }
 
   upvote() {
-    // if (this.voted > 0) {
-    //   this.store.dispatch(new RevokePostVote({ postId: this.post.id}));
-    // } else {
-    //   this.store.dispatch(new UpvotePost({ postId: this.post.id }));
-    // }
+    if (this.voted > 0) {
+      this.myVotesService.revokePostVote(this.post.id).pipe(take(1)).subscribe();
+    } else {
+      this.myVotesService.upvotePost(this.post.id).pipe(take(1)).subscribe();
+    }
   }
 
   downvote() {
-    // if (this.voted < 0) {
-    //   this.store.dispatch(new RevokePostVote({ postId: this.post.id }));
-    // } else {
-    //   this.store.dispatch(new DownvotePost({ postId: this.post.id }));
-    // }
+    if (this.voted < 0) {
+      this.myVotesService.revokePostVote(this.post.id).pipe(take(1)).subscribe();
+    } else {
+      this.myVotesService.downvotePost(this.post.id).pipe(take(1)).subscribe();
+    }
   }
 }
