@@ -14,6 +14,7 @@ import {
   VoteButtonsComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
 import { postsPaginatorProvider } from './state';
+import { CommentItemComponent } from './components/comment-item/comment-item.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { postsPaginatorProvider } from './state';
     NewPostPageComponent,
     CommentTreeComponent,
     PostItemComponent,
-    VoteButtonsComponent
+    VoteButtonsComponent,
+    CommentItemComponent
   ],
   providers: [
     PostsApiService,
