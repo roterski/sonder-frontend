@@ -23,6 +23,7 @@ export class PostsService {
     const request = this.postsApi
       .getPosts()
       .pipe(
+        map(response => response.data),
         tap((posts: Post[]) => this.postsStore.addPosts(posts))
       );
 
@@ -31,6 +32,23 @@ export class PostsService {
         return loaded ? this.postsQuery.selectAll() : request;
       })
     );
+  }
+
+  getPostsPage(paginationParams: { page?: number, perPage?: number } = {}) {
+    return this.postsApi
+      .getPosts(paginationParams)
+      .pipe(
+        tap((response) => this.postsStore.addPosts(response.data)),
+        map((response) => {
+          return {
+            currentPage: response.page,
+            perPage: response.perPage,
+            total: response.totalEntries,
+            lastPage: response.totalPages,
+            data: response.data
+          };
+        })
+      );
   }
 
   getPost(postId: number): Observable<Post> {

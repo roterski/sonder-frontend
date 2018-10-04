@@ -13,6 +13,7 @@ import {
   PostItemComponent,
   VoteButtonsComponent } from './components';
 import { SharedModule } from '../shared/shared.module';
+import { postsPaginatorProvider } from './state';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     PostsApiService,
-    VotesApiService
+    VotesApiService,
+    postsPaginatorProvider
   ]
 })
 export class PostsModule { }

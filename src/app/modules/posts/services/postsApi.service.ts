@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Post, /*Comment TODO*/ } from '../state/post.model';
 import { BackendService } from '../../auth/services/backend.service';
 
@@ -8,10 +8,9 @@ import { BackendService } from '../../auth/services/backend.service';
 export class PostsApiService {
   constructor(private backend: BackendService) {}
 
-  getPosts(): Observable<Post[]> {
+  getPosts(params: any = {}): Observable<any> {
     return this.backend
-      .get('/posts')
-      .pipe(map(response => response.data));
+      .get('/posts', { params });
   }
 
   getPost(postId: number): Observable<Post> {

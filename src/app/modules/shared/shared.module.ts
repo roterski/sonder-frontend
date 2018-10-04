@@ -8,7 +8,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatTreeModule,
-  MatIconModule
+  MatIconModule,
+  MatPaginatorModule
 } from '@angular/material';
 import { LoadingSplashComponent } from './components';
 
@@ -21,7 +22,8 @@ import { LoadingSplashComponent } from './components';
     MatFormFieldModule,
     MatInputModule,
     MatTreeModule,
-    MatIconModule
+    MatIconModule,
+    MatPaginatorModule
   ],
   exports: [
     MatListModule,
@@ -31,6 +33,7 @@ import { LoadingSplashComponent } from './components';
     MatInputModule,
     MatTreeModule,
     MatIconModule,
+    MatPaginatorModule,
     LoadingSplashComponent
   ],
   declarations: [

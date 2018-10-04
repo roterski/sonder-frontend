@@ -15,9 +15,9 @@ export class BackendService {
     private http: HttpClient,
     private sessionQuery: SessionQuery) { }
 
-  get(path: string): Observable<any> {
+  get(path: string, params: any = {}): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
-      return this.http.get(this.url(path), headers);
+      return this.http.get(this.url(path), {...headers, ...params });
     });
   }
 
