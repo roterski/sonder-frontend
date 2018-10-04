@@ -1,5 +1,5 @@
 import { ID } from '@datorama/akita';
-import { Author } from './../models';
+import { Author } from './author.model';
 
 export interface PostComment {
   id: number;

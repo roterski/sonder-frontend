@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Post, MyVotesService } from '../../state';
+import { MyVotesService } from '../../state';
+import { Post } from '../../models';
 import { take } from 'rxjs/operators';
 
 @Component({

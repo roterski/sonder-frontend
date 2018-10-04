@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { switchMap, filter, map, tap, combineLatest, catchError } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
-import { Post, PostComment, PostsQuery, PostsService, PostCommentsQuery, PostCommentsService } from '../../state';
+import { PostsQuery, PostsService, PostCommentsQuery, PostCommentsService } from '../../state';
+import { Post, PostComment } from '../../models';
 
 @Component({
   selector: 'app-post-show-page',

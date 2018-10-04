@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig, getInitialActiveState } from '@datorama/akita';
-import { Post } from './post.model';
+import { Post } from '../models/post.model';
 
 export interface PostsState extends EntityState<Post> {
   loaded: boolean;

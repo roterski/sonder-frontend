@@ -1,16 +1,22 @@
+import { ID } from '@datorama/akita';
 import { Author } from './author.model';
 
-export class Post {
-  constructor() {
-    this.title = '';
-    this.body = '';
-  }
+export interface Post {
+  id: ID;
+  title: string;
+  body: string;
+  author: Author;
+  points: number;
+  voted: number;
+  commentCount: number;
+}
 
-  public id: number;
-  public title: string;
-  public body: string;
-  public author: Author;
-  public points: number;
-  public voted: number;
-  public commentCount: number;
+export function createPost(params: Partial<Post>) {
+  return {
+    title: '',
+    body: '',
+    points: 0,
+    voted: 0,
+    commentCount: 0
+  } as Post;
 }

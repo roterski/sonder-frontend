@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryEntity } from '@datorama/akita';
 import { PostCommentsStore, PostCommentsState } from './post-comments.store';
-import { PostComment } from './post-comment.model';
+import { PostComment } from '../models/post-comment.model';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, combineLatest } from 'rxjs/operators';
 

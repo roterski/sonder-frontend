@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ID, noop } from '@datorama/akita';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from './post.model';
+import { Post } from '../models/post.model';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
 import { PostsStore } from './posts.store';

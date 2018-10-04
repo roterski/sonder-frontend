@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Post, /*Comment TODO*/ } from '../state/post.model';
+import { Post, PostComment } from '../models';
 import { BackendService } from '../../auth/services/backend.service';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class PostsApiService {
       .pipe(map(response => response.data));
   }
 
-  createComment(postId: number, comment: Comment): Observable<Comment> {
+  createComment(postId: number, comment: PostComment): Observable<PostComment> {
     return this.backend
       .post(`/posts/${postId}/comments`, { comment })
       .pipe(map(response => response.data));

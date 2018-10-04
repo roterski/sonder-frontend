@@ -1,7 +1,7 @@
 import { Paginator, PaginatorPlugin } from '@datorama/akita';
 import { InjectionToken } from '@angular/core';
 import { PostsQuery } from './posts.query';
-import { Post } from './post.model';
+import { Post } from '../models/post.model';
 
 export const POSTS_PAGINATOR = new InjectionToken('POSTS_PAGINATOR');
 

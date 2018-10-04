@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig, getInitialActiveState } from '@datorama/akita';
-import { PostComment } from './post-comment.model';
-
+import { PostComment } from '../models/post-comment.model';
 
 export interface CommentIds {
   ids: Array<number>;

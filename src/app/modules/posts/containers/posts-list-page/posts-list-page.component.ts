@@ -3,10 +3,9 @@ import { PageEvent } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
 import { PaginatorPlugin, PaginationResponse } from '@datorama/akita';
 import { switchMap, map } from 'rxjs/operators';
-
+import { Post } from '../../models';
 import {
   PostsQuery,
-  Post,
   PostsService,
   POSTS_PAGINATOR,
   MyVotesService,
