@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Query } from '@datorama/akita';
+import { Query, ID } from '@datorama/akita';
 import { MyVotesStore, MyVotesState } from './my-votes.store';
 
 @Injectable({ providedIn: 'root' })
@@ -10,4 +10,9 @@ export class MyVotesQuery extends Query<MyVotesState> {
     super(store);
   }
 
+  selectCommentVotes(postId: ID) {
+    return this.select((state: MyVotesState) => {
+      return state.commentVotes[postId] && state.commentVotes[postId].votes;
+    });
+  }
 }

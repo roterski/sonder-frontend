@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
+import { Vote } from '../models';
 
 export interface MyVotesState {
   postVotes: PostVotes;
@@ -34,7 +35,7 @@ export class MyVotesStore extends Store<MyVotesState> {
     super(createInitialState());
   }
 
-  addPostVote(vote) {
+  addPostVote(vote: Vote) {
     this.setState((state: MyVotesState) => {
       return {
         ...state,
@@ -49,8 +50,8 @@ export class MyVotesStore extends Store<MyVotesState> {
     });
   }
 
-  addPostVotes(votes) {
-    const postVotes = votes.reduce((acc, vote) => {
+  addPostVotes(votes: Vote[]) {
+    const postVotes = votes.reduce((acc, vote: Vote) => {
       acc[vote.postId] = vote.points;
       return acc;
     }, {});
@@ -61,6 +62,21 @@ export class MyVotesStore extends Store<MyVotesState> {
         postVotes: {
           votes: postVotes,
           loaded: true
+        }
+      };
+    });
+  }
+
+  addCommentVote(vote: Vote) {
+    this.setState((state: MyVotesState) => {
+      return {
+        ...state,
+        commentVotes: {
+          ...state.commentVotes,
+          [vote.postId]: {
+            ...state.commentVotes[vote.postId],
+            [vote.commentId]: vote.points
+          }
         }
       };
     });

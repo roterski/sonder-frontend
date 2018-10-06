@@ -1,7 +1,5 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" >
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding [matTreeNodeToggleRecursive]="true">
-    <mat-card>
-      {{ node.comment.body }}
-    </mat-card>
+    <app-comment-item [comment]="node.comment" [voted]="votes && votes[node.comment.id]"></app-comment-item>
   </mat-tree-node>
 </mat-tree>

@@ -27,6 +27,8 @@ export class CommentFlatNode {
 export class CommentTreeComponent implements OnInit {
   @Input() comments: PostComment[];
   @Input() commentEntities: any;
+  @Input() votes;
+
   dataSource: MatTreeFlatDataSource<CommentNode, CommentFlatNode>;
   treeFlattener: MatTreeFlattener<CommentNode, CommentFlatNode>;
   treeControl: FlatTreeControl<CommentFlatNode>;

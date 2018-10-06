@@ -44,4 +44,28 @@ export class MyVotesService {
         tap(vote => this.myVotesStore.addPostVote(vote))
       );
   }
+
+  upvoteComment(postId: ID) {
+    return this.votesApi
+      .upvote('comments', postId)
+      .pipe(
+      tap(vote => this.myVotesStore.addCommentVote(vote))
+      );
+  }
+
+  downvoteComment(postId: ID) {
+    return this.votesApi
+      .downvote('comments', postId)
+      .pipe(
+      tap(vote => this.myVotesStore.addCommentVote(vote))
+      );
+  }
+
+  revokeCommentVote(postId: ID) {
+    return this.votesApi
+      .revokeVote('comments', postId)
+      .pipe(
+      tap(vote => this.myVotesStore.addCommentVote(vote))
+      );
+  }
 }

@@ -2,7 +2,8 @@ import { ID } from '@datorama/akita';
 import { Author } from './author.model';
 
 export interface PostComment {
-  id: number;
+  id: ID;
+  postId: ID;
   body: string;
   author: Author;
   parentIds: Array<number>;

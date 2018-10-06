@@ -1,3 +1,13 @@
-<p>
-  comment-item works!
-</p>
+<mat-card>
+  <mat-card-content>
+    {{ comment.body }}
+  </mat-card-content>
+  <mat-card-actions>
+    <app-vote-buttons
+      [points]="comment.points"
+      [voted]="voted"
+      (upvoted)="upvote()"
+      (downvoted)="downvote()">
+    </app-vote-buttons>
+  </mat-card-actions>
+</mat-card>

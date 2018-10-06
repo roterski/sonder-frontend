@@ -6,6 +6,7 @@
   <mat-card-subtitle>Comments</mat-card-subtitle>
   <mat-card-content>
     <app-comment-tree [comments]="comments$ | async"
-                      [commentEntities]="commentEntities$ | async"></app-comment-tree>
+                      [commentEntities]="commentEntities$ | async"
+                      [votes]="commentVotes$ | async"></app-comment-tree>
   </mat-card-content>
 </mat-card>

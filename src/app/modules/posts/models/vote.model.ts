@@ -1,5 +1,9 @@
+import { ID } from '@datorama/akita';
+
 export interface Vote {
-  targetClass: 'posts' | 'comments';
-  targetId: number;
-  voted: -1 | 0 | 1;
+  id: ID;
+  voterId: number;
+  postId: number;
+  commentId: number;
+  points: -1 | 0 | 1;
 }
