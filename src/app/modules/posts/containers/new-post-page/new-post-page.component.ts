@@ -42,7 +42,7 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
       ).setForm(this.postForm);
   }
 
-  createPost() {
+  addPost() {
     this.postsService.addPost(this.postForm.value).subscribe(() => {
       this.router.navigate(['/']);
       this.persistForm.reset();

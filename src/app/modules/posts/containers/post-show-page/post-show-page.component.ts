@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { switchMap, filter, map, tap, combineLatest, catchError } from 'rxjs/operators';
+import { switchMap, filter, map, tap, combineLatest, catchError, take } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
 import {
   PostsQuery,
@@ -9,6 +9,8 @@ import {
   PostCommentsService,
   MyVotesQuery } from '../../state';
 import { Post, PostComment } from '../../models';
+import { NewCommentFormComponent } from '../../containers/new-comment-form/new-comment-form.component';
+import { MatBottomSheet } from '@angular/material';
 
 @Component({
   selector: 'app-post-show-page',
@@ -17,6 +19,7 @@ import { Post, PostComment } from '../../models';
 })
 export class PostShowPageComponent implements OnInit, OnDestroy {
   post$: Observable<Post>;
+  postId: number;
   comments$: Observable<PostComment[]>;
   commentsLoaded$: Observable<boolean>;
   commentEntities$: Observable<any>;
@@ -31,7 +34,8 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
     private postCommentsQuery: PostCommentsQuery,
     private postCommentsService: PostCommentsService,
     private postsService: PostsService,
-    private myVotesQuery: MyVotesQuery) {
+    private myVotesQuery: MyVotesQuery,
+    private newCommentBottomSheet: MatBottomSheet) {
   }
 
   ngOnInit() {
@@ -40,6 +44,7 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.push(postId$.subscribe((postId: number) => {
+      this.postId = postId;
       this.post$ = this.postsService.getPost(postId);
       this.comments$ = this.postCommentsService.getPostComments(postId);
       this.subscriptions.push(this.comments$.subscribe());
@@ -47,6 +52,16 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
       this.commentEntities$ = this.postCommentsQuery.postCommentEntities$;
       this.commentVotes$ = this.myVotesQuery.selectCommentVotes(postId);
     }));
+  }
+
+  openNewCommentBottomSheet() {
+    this.newCommentBottomSheet.open(NewCommentFormComponent,
+      {
+        data: {
+          postId: this.postId,
+          parentIds: []
+        }
+      });
   }
 
   ngOnDestroy() {

@@ -5,7 +5,7 @@ import { PostsApiService } from '../services';
 import { PostComment } from '../models/post-comment.model';
 import { PostCommentsQuery } from './post-comments.query';
 import { Observable, of } from 'rxjs';
-import { tap, switchMap, combineLatest, map } from 'rxjs/operators';
+import { tap, switchMap, combineLatest, map, catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class PostCommentsService {
@@ -16,7 +16,7 @@ export class PostCommentsService {
     private postCommentsQuery: PostCommentsQuery) {
   }
 
-  getPostComments(postId: number) {
+  getPostComments(postId: ID) {
     const request = this.postsApi
       .getPostComments(postId)
       .pipe(
@@ -30,4 +30,16 @@ export class PostCommentsService {
     );
   }
 
+  addPostComment(postId: ID, postComment: PostComment) {
+    return this.postsApi
+      .createComment(postId, postComment)
+      .pipe(
+        tap((entity: PostComment) => this.postCommentsStore.add(entity)),
+        catchError((catchedError: any) => {
+          const error = catchedError.error && catchedError.error.errors || catchedError;
+          this.postCommentsStore.setPostCommentError(error);
+          return of(false);
+        })
+      );
+  }
 }

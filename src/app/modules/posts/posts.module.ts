@@ -34,6 +34,10 @@ import { NewCommentFormComponent } from './containers/new-comment-form/new-comme
     CommentItemComponent,
     NewCommentFormComponent
   ],
+  entryComponents: [
+    CommentItemComponent,
+    NewCommentFormComponent
+  ],
   providers: [
     PostsApiService,
     VotesApiService,

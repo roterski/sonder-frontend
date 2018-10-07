@@ -9,6 +9,7 @@ export interface CommentIds {
 
 export interface PostCommentsState extends EntityState<PostComment> {
   commentsByPost: { [postId: number]: CommentIds };
+  postCommentError: any;
 }
 
 const initialState = {
@@ -23,7 +24,7 @@ export class PostCommentsStore extends EntityStore<PostCommentsState, PostCommen
     super(initialState);
   }
 
-  addPostComments(comments: PostComment[], postId: number) {
+  addPostComments(comments: PostComment[], postId: ID) {
     const ids = comments.map((comment: PostComment) => comment.id);
 
     this.add(comments);
@@ -58,4 +59,12 @@ export class PostCommentsStore extends EntityStore<PostCommentsState, PostCommen
     return entitiesWithChildren;
   }
 
+  setPostCommentError(error = {}) {
+    this.setState((state: PostCommentsState) => {
+      return {
+        ...state,
+        postCommentError: error
+      };
+    });
+  }
 }
