@@ -10,6 +10,8 @@ import { take } from 'rxjs/operators';
 })
 export class CommentItemComponent implements OnInit {
   @Input() comment: PostComment;
+  @Input() expanded: boolean;
+  @Input() expandable: boolean;
   @Input() voted: -1 | 0 | 1;
 
   constructor(

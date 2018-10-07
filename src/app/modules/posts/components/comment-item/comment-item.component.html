@@ -9,5 +9,6 @@
       (upvoted)="upvote()"
       (downvoted)="downvote()">
     </app-vote-buttons>
+    <button *ngIf="expandable" mat-button matTreeNodeToggle [matTreeNodeToggleRecursive]="true">{{ expanded ? 'Collapse' : 'Expand' }}</button>
   </mat-card-actions>
 </mat-card>

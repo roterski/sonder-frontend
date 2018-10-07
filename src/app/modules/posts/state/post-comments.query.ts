@@ -28,10 +28,7 @@ export class PostCommentsQuery extends QueryEntity<PostCommentsState, PostCommen
   selectPostParentComments(postId: number) {
     return this.selectPostCommentsIds(postId).pipe(
       combineLatest(this.postCommentEntities$),
-      map(([ids, entities], index) => {
-        if (ids === undefined) { return []; }
-        return ids && ids.map((id: number) => entities[id]);
-      }),
+      map(([ids, entities], index) => (ids || []) && ids.map((id: number) => entities[id])),
       map(comments => comments.filter(comment => comment.parentIds.length === 0))
     );
   }
