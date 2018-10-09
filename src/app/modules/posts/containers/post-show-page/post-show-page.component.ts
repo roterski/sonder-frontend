@@ -7,6 +7,7 @@ import {
   PostsService,
   PostCommentsQuery,
   PostCommentsService,
+  MyVotesService,
   MyVotesQuery } from '../../state';
 import { Post, PostComment } from '../../models';
 import { NewCommentFormComponent } from '../../containers/new-comment-form/new-comment-form.component';
@@ -35,7 +36,8 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
     private postCommentsService: PostCommentsService,
     private postsService: PostsService,
     private myVotesQuery: MyVotesQuery,
-    private newCommentBottomSheet: MatBottomSheet) {
+    private newCommentBottomSheet: MatBottomSheet,
+    private myVotesService: MyVotesService) {
   }
 
   ngOnInit() {
@@ -50,7 +52,7 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
       this.subscriptions.push(this.comments$.subscribe());
       this.commentsLoaded$ = this.postCommentsQuery.selectPostCommentsLoaded(postId);
       this.commentEntities$ = this.postCommentsQuery.postCommentEntities$;
-      this.commentVotes$ = this.myVotesQuery.selectCommentVotes(postId);
+      this.commentVotes$ = this.myVotesService.getMyCommentVotes(postId);
     }));
   }
 
