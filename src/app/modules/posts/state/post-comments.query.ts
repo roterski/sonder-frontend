@@ -30,7 +30,7 @@ export class PostCommentsQuery extends QueryEntity<PostCommentsState, PostCommen
     return this.selectPostCommentsIds(postId).pipe(
       combineLatest(this.postCommentEntities$),
       map(([ids, entities], index) => (ids || []) && ids.map((id: ID) => entities[id])),
-      map(comments => comments.filter(comment => comment.parentIds.length === 0))
+      map(comments => comments.filter(comment => comment && comment.parentIds.length === 0))
     );
   }
 }

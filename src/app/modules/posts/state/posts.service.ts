@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ID, noop } from '@datorama/akita';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../models/post.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
 import { PostsStore } from './posts.store';
 import { PostsQuery } from './posts.query';
@@ -68,9 +68,13 @@ export class PostsService {
       .pipe(
         tap((entity: Post) => this.postsStore.add(entity)),
         catchError((catchedError: any) => {
-          const error = catchedError.error && catchedError.error.errors || catchedError;
-          this.postsStore.setError(error);
-          return of(false);
+          if (catchedError.name === 'HttpErrorResponse') {
+            const error = catchedError.error && catchedError.error.errors || catchedError;
+            this.postsStore.setError(error);
+            return of(false);
+          } else {
+            throwError(catchedError);
+          }
         })
       );
   }

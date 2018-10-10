@@ -24,6 +24,47 @@ export class PostCommentsStore extends EntityStore<PostCommentsState, PostCommen
     super(initialState);
   }
 
+  addPostComment(comment: PostComment) {
+    const parentId = comment.parentIds.slice(-1)[0];
+
+    this.setState((state: PostCommentsState) => {
+      let newState = {
+        ...state,
+        entities: {
+          ...state.entities,
+          [comment.id]: {
+            ...comment,
+            childrenIds: []
+          }
+        },
+        ids: [...state.ids, comment.id],
+        commentsByPost: {
+          ...state.commentsByPost,
+          [comment.postId]: {
+            ...state.commentsByPost[comment.postId],
+            ids: [
+              ...state.commentsByPost[comment.postId].ids,
+              comment.id
+            ]
+          }
+        }
+      };
+      if (parentId !== undefined) {
+        newState = {
+          ...newState,
+          entities: {
+            ...newState.entities,
+            [parentId]: {
+              ...newState.entities[parentId],
+              childrenIds: [...newState.entities[parentId].childrenIds, comment.id]
+            }
+          }
+        };
+      }
+      return newState;
+    });
+  }
+
   addPostComments(comments: PostComment[], postId: ID) {
     const ids = comments.map((comment: PostComment) => comment.id);
 
@@ -59,7 +100,7 @@ export class PostCommentsStore extends EntityStore<PostCommentsState, PostCommen
     return entitiesWithChildren;
   }
 
-  setPostCommentError(error = {}) {
+  setPostCommentError(error = null) {
     this.setState((state: PostCommentsState) => {
       return {
         ...state,

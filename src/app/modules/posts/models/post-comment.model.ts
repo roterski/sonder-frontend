@@ -6,10 +6,10 @@ export interface PostComment {
   postId: ID;
   body: string;
   author: Author;
-  parentIds: Array<number>;
+  parentIds: Array<ID>;
   points: number;
   voted: number;
-  childrenIds: Array<number>;
+  childrenIds: Array<ID>;
 }
 
 export function createComment(params: Partial<PostComment>) {

@@ -1,14 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { switchMap, filter, map, tap, combineLatest, catchError, take } from 'rxjs/operators';
+import { HashMap } from '@datorama/akita';
+import { map } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
 import {
-  PostsQuery,
   PostsService,
   PostCommentsQuery,
   PostCommentsService,
-  MyVotesService,
-  MyVotesQuery } from '../../state';
+  MyVotesService } from '../../state';
 import { Post, PostComment } from '../../models';
 import { NewCommentFormComponent } from '../../containers/new-comment-form/new-comment-form.component';
 import { MatBottomSheet } from '@angular/material';
@@ -23,19 +22,16 @@ export class PostShowPageComponent implements OnInit, OnDestroy {
   postId: number;
   comments$: Observable<PostComment[]>;
   commentsLoaded$: Observable<boolean>;
-  commentEntities$: Observable<any>;
+  commentEntities$: Observable<HashMap<PostComment>>;
   commentVotes$: Observable<any>;
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
-    private postsQuery: PostsQuery,
     private postCommentsQuery: PostCommentsQuery,
     private postCommentsService: PostCommentsService,
     private postsService: PostsService,
-    private myVotesQuery: MyVotesQuery,
     private newCommentBottomSheet: MatBottomSheet,
     private myVotesService: MyVotesService) {
   }

@@ -1,10 +1,13 @@
 # TODO
 Check code for comments with `TODO` tag
 
+## Bugs
+- newly created post is not added to the post list without reload
+
 ## Features
 - comments
-  - create
-  - voting
+  - [x] create
+  - [x] voting
 - posts
   - filter by group
   - add groups

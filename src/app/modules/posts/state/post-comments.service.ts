@@ -4,7 +4,7 @@ import { PostCommentsStore, PostCommentsState } from './post-comments.store';
 import { PostsApiService } from '../services';
 import { PostComment } from '../models/post-comment.model';
 import { PostCommentsQuery } from './post-comments.query';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { tap, switchMap, combineLatest, map, catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -34,11 +34,15 @@ export class PostCommentsService {
     return this.postsApi
       .createComment(postId, postComment)
       .pipe(
-        tap((entity: PostComment) => this.postCommentsStore.add(entity)),
-        catchError((catchedError: any) => {
-          const error = catchedError.error && catchedError.error.errors || catchedError;
-          this.postCommentsStore.setPostCommentError(error);
-          return of(false);
+        tap((comment: PostComment) => this.postCommentsStore.addPostComment(comment)),
+        catchError((err: any) => {
+          if (err.name === 'HttpErrorResponse') {
+            const error = err.error && err.error.errors || err;
+            this.postCommentsStore.setPostCommentError(error);
+            return of(false);
+          } else {
+            throwError(err);
+          }
         })
       );
   }
