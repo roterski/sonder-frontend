@@ -26,7 +26,6 @@ export class PostsService {
         map(response => response.data),
         tap((posts: Post[]) => this.postsStore.addPosts(posts))
       );
-
     return this.postsQuery.loaded$.pipe(
       switchMap((loaded: boolean) => {
         return loaded ? this.postsQuery.selectAll() : request;
@@ -77,9 +76,5 @@ export class PostsService {
           }
         })
       );
-  }
-
-  clearStore() {
-    this.postsStore.constructor();
   }
 }

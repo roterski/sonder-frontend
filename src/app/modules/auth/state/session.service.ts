@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { SessionStore } from './session.store';
 import { AuthService, BackendService } from '../services';
 import { map, tap, catchError, exhaustMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { PostsService } from '../../posts/state';
+import { ClearStoresService, POSTS_PAGINATOR } from '../../posts/state';
+import { Post } from '../../posts/models';
+import { PaginatorPlugin, PaginationResponse } from '@datorama/akita';
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -12,7 +14,8 @@ export class SessionService {
     private sessionStore: SessionStore,
     private authService: AuthService,
     private backendService: BackendService,
-    private postsService: PostsService) {
+    @Inject(POSTS_PAGINATOR) private paginatorRef: PaginatorPlugin<Post>,
+    private clearStoresService: ClearStoresService) {
   }
 
   logIn(): Observable<boolean> {
@@ -29,8 +32,9 @@ export class SessionService {
   }
 
   logOut() {
+    this.paginatorRef.clearCache();
     this.sessionStore.logOut();
-    this.postsService.clearStore();
+    this.clearStoresService.clearStores();
   }
 
 }

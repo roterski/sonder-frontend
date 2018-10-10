@@ -7,6 +7,7 @@ export interface PostsState extends EntityState<Post> {
 }
 
 const initialState = {
+  loading: false,
   loaded: false,
   ...getInitialActiveState()
 };

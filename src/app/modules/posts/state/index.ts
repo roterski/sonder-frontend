@@ -10,3 +10,5 @@ export * from './post-comments.service';
 export * from './my-votes.query';
 export * from './my-votes.store';
 export * from './my-votes.service';
+
+export * from './clear-stores.service';

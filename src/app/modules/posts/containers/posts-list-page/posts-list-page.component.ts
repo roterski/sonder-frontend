@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
 import { PaginatorPlugin, PaginationResponse } from '@datorama/akita';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, combineLatest } from 'rxjs/operators';
 import { Post } from '../../models';
 import {
   PostsQuery,
@@ -10,7 +10,6 @@ import {
   POSTS_PAGINATOR,
   MyVotesService,
   MyVotesQuery } from '../../state';
-import { combineLatest } from 'rxjs/internal/operators/combineLatest';
 
 @Component({
   selector: 'app-posts-list-page',
@@ -18,7 +17,6 @@ import { combineLatest } from 'rxjs/internal/operators/combineLatest';
   styleUrls: ['./posts-list-page.component.css']
 })
 export class PostsListPageComponent implements OnInit, OnDestroy {
-  public posts$: Observable<Post[]>;
   public loading$: Observable<boolean>;
   public postVotes$: Observable<any>;
   public pagination$: Observable<PaginationResponse<Post>>;
@@ -40,7 +38,6 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
       map(([storeLoading, pageLoading]) => storeLoading && pageLoading)
     );
     this.postVotes$ = this.myVotesQuery.myPostVotes$;
-
     this.pagination$ = this.paginatorRef.pageChanges.pipe(
       switchMap((page) => {
         return this.paginatorRef.getPage(() => this.postsService.getPostsPage({ page, perPage: this.perPage }));
@@ -56,5 +53,6 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
+    this.paginatorRef.destroy();
   }
 }

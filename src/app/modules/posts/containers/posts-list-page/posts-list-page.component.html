@@ -2,7 +2,7 @@
 
 <section *ngIf="(pagination$ | async) as pagination">
   <mat-nav-list role="list" *ngFor="let post of pagination.data">
-    <app-post-item [post]="post" [voted]="(postVotes$ | async)[post.id]"></app-post-item>
+    <app-post-item *ngIf="post" [post]="post" [voted]="(postVotes$ | async)[post.id]"></app-post-item>
   </mat-nav-list>
   <mat-paginator [length]="pagination.total"
                 [pageSize]="pagination.perPage"
