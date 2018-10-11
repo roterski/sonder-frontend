@@ -10,7 +10,9 @@ import {
   MatTreeModule,
   MatIconModule,
   MatPaginatorModule,
-  MatBottomSheetModule
+  MatBottomSheetModule,
+  MatChipsModule,
+  MatAutocompleteModule
 } from '@angular/material';
 import { LoadingSplashComponent } from './components';
 
@@ -25,7 +27,9 @@ import { LoadingSplashComponent } from './components';
     MatTreeModule,
     MatIconModule,
     MatPaginatorModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatListModule,
@@ -37,6 +41,8 @@ import { LoadingSplashComponent } from './components';
     MatIconModule,
     MatPaginatorModule,
     MatBottomSheetModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     LoadingSplashComponent
   ],
   declarations: [

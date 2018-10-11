@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { PostsApiService, VotesApiService } from './services';
+import { PostsApiService, VotesApiService, TagsApiService } from './services';
 import {
   PostShowPageComponent,
   NewPostPageComponent,
@@ -16,6 +16,7 @@ import { SharedModule } from '../shared/shared.module';
 import { postsPaginatorProvider } from './state';
 import { CommentItemComponent } from './components/comment-item/comment-item.component';
 import { NewCommentFormComponent } from './containers/new-comment-form/new-comment-form.component';
+import { TagChipsComponent } from './components/tag-chips/tag-chips.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { NewCommentFormComponent } from './containers/new-comment-form/new-comme
     PostItemComponent,
     VoteButtonsComponent,
     CommentItemComponent,
-    NewCommentFormComponent
+    NewCommentFormComponent,
+    TagChipsComponent
   ],
   entryComponents: [
     CommentItemComponent,
@@ -41,6 +43,7 @@ import { NewCommentFormComponent } from './containers/new-comment-form/new-comme
   providers: [
     PostsApiService,
     VotesApiService,
+    TagsApiService,
     postsPaginatorProvider
   ]
 })
