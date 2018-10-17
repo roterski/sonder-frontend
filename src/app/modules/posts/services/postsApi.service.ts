@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { ID } from '@datorama/akita';
-import { Post, PostComment } from '../models';
+import { Post, PostComment, Tag } from '../models';
 import { BackendService } from '../../auth/services/backend.service';
 
 @Injectable()
@@ -20,9 +20,9 @@ export class PostsApiService {
       .pipe(map(response => response.data));
   }
 
-  createPost(post: Post): Observable<Post> {
+  createPostWithTags(post: Post, tags: Tag[]): Observable<Post> {
     return this.backend
-      .post('/posts', { post })
+      .post('/posts', { post, tags })
       .pipe(map(response => response.data));
   }
 

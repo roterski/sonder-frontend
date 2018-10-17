@@ -1,6 +1,9 @@
 <mat-form-field>
   <mat-chip-list #chipList>
-    <mat-chip *ngFor="let tag of tags" [selectable]="selectable" [removable]="removable" (removed)="remove(tag)">
+    <mat-chip *ngFor="let tag of (newPostTags$ | async)"
+              [selectable]="true"
+              [removable]="true"
+              (removed)="remove(tag)">
       {{ tag.name }}
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
@@ -11,7 +14,7 @@
       [matAutocomplete]="auto"
       [matChipInputFor]="chipList"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      [matChipInputAddOnBlur]="addOnBlur"
+      [matChipInputAddOnBlur]="false"
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">

@@ -33,4 +33,12 @@ export class TagsService {
       })
     );
   }
+
+  addNewPostTag(tag: Tag) {
+    this.tagsStore.addNewPostTag(tag);
+  }
+
+  removeNewPostTag(tag: Tag) {
+    this.tagsStore.removeNewPostTag(tag);
+  }
 }

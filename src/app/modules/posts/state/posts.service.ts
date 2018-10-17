@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ID, noop } from '@datorama/akita';
 import { ActivatedRoute } from '@angular/router';
-import { Post } from '../models/post.model';
+import { Post, Tag } from '../models';
 import { Observable, of, throwError } from 'rxjs';
 import { tap, catchError, switchMap, map } from 'rxjs/operators';
 import { PostsStore } from './posts.store';
@@ -61,9 +61,9 @@ export class PostsService {
       );
   }
 
-  addPost(post: Post) {
+  addPost(post: Post, tags: Tag[] = []) {
     return this.postsApi
-      .createPost(post)
+      .createPostWithTags(post, tags)
       .pipe(
         tap((entity: Post) => this.postsStore.add(entity)),
         catchError((catchedError: any) => {

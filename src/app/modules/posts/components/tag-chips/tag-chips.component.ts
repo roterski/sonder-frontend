@@ -13,16 +13,12 @@ import { Tag } from '../../models';
   styleUrls: ['./tag-chips.component.scss']
 })
 export class TagChipsComponent implements OnInit, OnDestroy {
-  visible = true;
-  selectable = true;
-  removable = true;
-  addOnBlur = false;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   tagCtrl = new FormControl();
 
 
   filteredTags$: Observable<Tag[]>;
-  tags: Tag[] = [];
+  newPostTags$: Observable<Tag[]>;
   allTags$: Observable<Tag[]>;
   private subscriptions: Subscription[] = [];
 
@@ -32,6 +28,7 @@ export class TagChipsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.allTags$ = this.tagsService.getTags();
     this.filteredTags$ = this.allTags$;
+    this.newPostTags$ = this.tagsQuery.newPostTags$;
     this.subscriptions.push(this.filteredTags$.subscribe());
     // this.filteredTags = this.tagCtrl.valueChanges.pipe(
     //   startWith([]),
@@ -40,20 +37,16 @@ export class TagChipsComponent implements OnInit, OnDestroy {
   }
 
   add(event: MatChipInputEvent): void {
-    this.tags.push({id: null, name: event.value});
+    this.tagsService.addNewPostTag({id: null, name: event.value});
     event.input.value = '';
   }
 
-  remove(tag) {
-    const index = this.tags.indexOf(tag);
-
-    if (index >= 0) {
-      this.tags.splice(index, 1);
-    }
+  remove(tag: Tag) {
+    this.tagsService.removeNewPostTag(tag);
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
-    this.tags.push(event.option.value);
+    this.tagsService.addNewPostTag(event.option.value);
   }
 
   // private _filter(value: string) {

@@ -7,6 +7,7 @@ import { Tag } from '../models/tag.model';
 export class TagsQuery extends QueryEntity<TagsState, Tag> {
   tags$ = this.select((state: TagsState) => state.entities);
   loaded$ = this.select((state: TagsState) => state.loaded);
+  newPostTags$ = this.select((state: TagsState) => state.newPostTags);
 
   constructor(protected store: TagsStore) {
     super(store);

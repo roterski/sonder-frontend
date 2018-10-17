@@ -4,10 +4,12 @@ import { Tag } from '../models/tag.model';
 
 export interface TagsState extends EntityState<Tag> {
   loaded: boolean;
+  newPostTags: Tag[];
 }
 
 const initialState = {
   loaded: false,
+  newPostTags: [],
   ...getInitialActiveState()
 };
 
@@ -17,6 +19,26 @@ export class TagsStore extends EntityStore<TagsState, Tag> {
 
   constructor() {
     super(initialState);
+  }
+
+  addNewPostTag(tag: Tag) {
+    this.setState((state: TagsState) => {
+      return {
+        ...state,
+        newPostTags: [...state.newPostTags, tag]
+      };
+    });
+  }
+
+  removeNewPostTag(tag: Tag) {
+    this.setState((state: TagsState) => {
+      const leftTags = state.newPostTags.filter((t) => t !== tag);
+
+      return {
+        ...state,
+        newPostTags: leftTags
+      };
+    });
   }
 }
 

@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 import { of, Observable } from 'rxjs';
 import { PersistNgFormPlugin } from '@datorama/akita';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { PostsQuery, PostsService } from '../../state';
-import { Post, createPost } from '../../models';
+import { PostsQuery, PostsService, TagsQuery } from '../../state';
+import { Post, createPost, Tag } from '../../models';
 
 @Component({
   selector: 'app-new-post-page',
@@ -23,7 +23,9 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private postsQuery: PostsQuery,
-    private postsService: PostsService) { }
+    private postsService: PostsService,
+    private tagsQuery: TagsQuery
+  ) { }
 
   ngOnInit() {
     this.createForm();
@@ -43,9 +45,14 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
   }
 
   addPost() {
-    this.postsService.addPost(this.postForm.value).subscribe(() => {
-      this.router.navigate(['/']);
-      this.persistForm.reset();
+    this.tagsQuery.newPostTags$.pipe(
+      switchMap((tags: Tag[]) => this.postsService.addPost(this.postForm.value, tags)),
+      take(1)
+    ).subscribe((added) => {
+      if (added) {
+        this.router.navigate(['/']);
+        this.persistForm.reset();
+      }
     });
   }
 
