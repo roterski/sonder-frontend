@@ -5,7 +5,7 @@ import { of, Observable } from 'rxjs';
 import { PersistNgFormPlugin } from '@datorama/akita';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { PostsQuery, PostsService, TagsQuery } from '../../state';
+import { PostsQuery, PostsService, TagsQuery, TagsService } from '../../state';
 import { Post, createPost, Tag } from '../../models';
 
 @Component({
@@ -24,7 +24,8 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private postsQuery: PostsQuery,
     private postsService: PostsService,
-    private tagsQuery: TagsQuery
+    private tagsQuery: TagsQuery,
+    private tagsService: TagsService
   ) { }
 
   ngOnInit() {
@@ -52,6 +53,7 @@ export class NewPostPageComponent implements OnInit, OnDestroy {
       if (added) {
         this.router.navigate(['/']);
         this.persistForm.reset();
+        this.tagsService.clearNewPostTags();
       }
     });
   }

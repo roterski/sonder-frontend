@@ -40,5 +40,14 @@ export class TagsStore extends EntityStore<TagsState, Tag> {
       };
     });
   }
+
+  clearNewPostTags() {
+    this.setState((state: TagsState) => {
+      return {
+        ...state,
+        newPostTags: []
+      };
+    });
+  }
 }
 

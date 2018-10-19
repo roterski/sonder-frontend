@@ -41,4 +41,8 @@ export class TagsService {
   removeNewPostTag(tag: Tag) {
     this.tagsStore.removeNewPostTag(tag);
   }
+
+  clearNewPostTags() {
+    this.tagsStore.clearNewPostTags();
+  }
 }
