@@ -1,5 +1,6 @@
 <app-loading-splash *ngIf="loading$ | async"></app-loading-splash>
 <app-tag-chips [selectedTags]="postFilterTags$"
+               [allowNew]="false"
                (added)="tagAdded($event)"
                (removed)="tagRemoved($event)">
 </app-tag-chips>

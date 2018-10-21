@@ -14,6 +14,7 @@ import { Tag } from '../../models';
 })
 export class TagChipsComponent implements OnInit {
   @Input() selectedTags: Observable<Tag[]>;
+  @Input() allowNew = true;
 
   @Output() added = new EventEmitter<Tag>();
   @Output() removed = new EventEmitter<Tag>();
@@ -42,9 +43,11 @@ export class TagChipsComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    const tag: Tag = { id: null, name: event.value };
-    this.added.emit(tag);
-    event.input.value = '';
+    if (this.allowNew) {
+      const tag: Tag = { id: null, name: event.value };
+      this.added.emit(tag);
+      event.input.value = '';
+    }
   }
 
   remove(tag: Tag) {

@@ -51,9 +51,7 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
         )
       ),
       switchMap(([page, tags]) => {
-        debugger
         return this.paginatorRef.getPage(() => {
-          debugger
           return this.postsService.getPostsPage({ page, tags, perPage: this.perPage });
         });
       })

@@ -11,7 +11,7 @@ export class PostsApiService {
 
   getPosts(params: any = {}): Observable<any> {
     return this.backend
-      .get('/posts', { params });
+      .get('/posts', ...params);
   }
 
   getPost(postId: ID): Observable<Post> {

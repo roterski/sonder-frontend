@@ -9,6 +9,6 @@ export class TagsApiService {
 
   getTags(params: any = {}): Observable<any> {
     return this.backend
-      .get('/tags', { params });
+      .get('/tags', ...params);
   }
 }

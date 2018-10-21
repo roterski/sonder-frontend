@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { map, catchError, concat, mergeMap, delay, filter } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
@@ -17,7 +17,17 @@ export class BackendService {
 
   get(path: string, params: any = {}): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
-      return this.http.get(this.url(path), {...headers, ...params });
+      const stringifyValues = (obj) => {
+        return Object.keys(obj).reduce((acc, key) => {
+          acc[key] = JSON.stringify(obj[key]);
+          return acc;
+        }, {});
+      };
+
+      return this.http.get(this.url(path), {
+        ...headers,
+        params: stringifyValues(params)
+      });
     });
   }
 
