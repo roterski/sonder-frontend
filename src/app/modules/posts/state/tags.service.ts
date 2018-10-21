@@ -42,6 +42,14 @@ export class TagsService {
     this.tagsStore.removeNewPostTag(tag);
   }
 
+  addPostFilterTag(tag: Tag) {
+    this.tagsStore.addPostFilterTag(tag);
+  }
+
+  removePostFilterTag(tag: Tag) {
+    this.tagsStore.removePostFilterTag(tag);
+  }
+
   clearNewPostTags() {
     this.tagsStore.clearNewPostTags();
   }

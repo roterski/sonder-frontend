@@ -33,9 +33,9 @@ export class PostsService {
     );
   }
 
-  getPostsPage(paginationParams: { page?: number, perPage?: number } = {}) {
+  getPostsPage(params: { tags?: Tag[], page?: number, perPage?: number } = {}) {
     return this.postsApi
-      .getPosts(paginationParams)
+      .getPosts(params)
       .pipe(
         tap((response) => this.postsStore.addPosts(response.data)),
         map((response) => {

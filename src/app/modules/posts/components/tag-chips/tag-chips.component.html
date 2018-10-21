@@ -1,6 +1,6 @@
 <mat-form-field>
   <mat-chip-list #chipList>
-    <mat-chip *ngFor="let tag of (newPostTags$ | async)"
+    <mat-chip *ngFor="let tag of (selectedTags | async)"
               [selectable]="true"
               [removable]="true"
               (removed)="remove(tag)">
@@ -8,7 +8,7 @@
       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
     </mat-chip>
     <input
-      placeholder="New tag..."
+      placeholder="Tags..."
       #tagInput
       [formControl]="tagCtrl"
       [matAutocomplete]="auto"
@@ -18,7 +18,7 @@
       (matChipInputTokenEnd)="add($event)">
   </mat-chip-list>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-    <mat-option *ngFor="let tag of (filteredTags$ | async)" [value]="tag.name" [id]="tag.id">
+    <mat-option *ngFor="let tag of (suggestedTags$ | async)" [value]="tag.name" [id]="tag.id">
       {{ tag.name }}
     </mat-option>
   </mat-autocomplete>

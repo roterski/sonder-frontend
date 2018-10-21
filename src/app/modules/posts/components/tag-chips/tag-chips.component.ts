@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, ElementRef, ViewChild, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Observable, Subscription } from 'rxjs';
 import { map, combineLatest } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { TagsService, TagsQuery } from '../../state';
+import { TagsService } from '../../state';
 import { Tag } from '../../models';
 
 @Component({
@@ -12,30 +12,28 @@ import { Tag } from '../../models';
   templateUrl: './tag-chips.component.html',
   styleUrls: ['./tag-chips.component.scss']
 })
-export class TagChipsComponent implements OnInit, OnDestroy {
-  public separatorKeysCodes: number[] = [ENTER, COMMA];
-  public tagCtrl = new FormControl();
+export class TagChipsComponent implements OnInit {
+  @Input() selectedTags: Observable<Tag[]>;
+
+  @Output() added = new EventEmitter<Tag>();
+  @Output() removed = new EventEmitter<Tag>();
+
+  private separatorKeysCodes: number[] = [ENTER, COMMA];
+  private tagCtrl = new FormControl();
   @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement>;
 
-  public filteredTags$: Observable<Tag[]>;
-  public newPostTags$: Observable<Tag[]>;
-  public allTags$: Observable<Tag[]>;
-  private subscriptions: Subscription[] = [];
+  private suggestedTags$: Observable<Tag[]>;
+  private newPostTags$: Observable<Tag[]>;
 
-  constructor(private tagsService: TagsService, private tagsQuery: TagsQuery) {
+  constructor(private tagsService: TagsService) {
   }
 
   ngOnInit() {
-    this.allTags$ = this.tagsService.getTags();
-    this.filteredTags$ = this.allTags$;
-    this.newPostTags$ = this.tagsQuery.newPostTags$;
-    this.subscriptions.push(this.filteredTags$.subscribe());
-
-    const notSelectedTags$ = this.allTags$.pipe(
-      combineLatest(this.newPostTags$),
+    const notSelectedTags$ = this.tagsService.getTags().pipe(
+      combineLatest(this.selectedTags),
       map(([all, selected]) => all.filter(tag => !selected.map((t) => t.name).includes(tag.name)))
     );
-    this.filteredTags$ = this.tagCtrl.valueChanges.pipe(
+    this.suggestedTags$ = this.tagCtrl.valueChanges.pipe(
       combineLatest(notSelectedTags$),
       map(([input, tags]) =>
         input ? tags.filter(tag => tag.name.toLowerCase().startsWith(input.toLowerCase())) : tags
@@ -44,21 +42,19 @@ export class TagChipsComponent implements OnInit, OnDestroy {
   }
 
   add(event: MatChipInputEvent): void {
-    this.tagsService.addNewPostTag({id: null, name: event.value});
+    const tag: Tag = { id: null, name: event.value };
+    this.added.emit(tag);
     event.input.value = '';
   }
 
   remove(tag: Tag) {
-    this.tagsService.removeNewPostTag(tag);
+    this.removed.emit(tag);
   }
 
   selected(event: MatAutocompleteSelectedEvent) {
-    this.tagsService.addNewPostTag({ id: event.option.id, name: event.option.value } as Tag);
+    const tag: Tag = { id: event.option.id, name: event.option.value };
+    this.added.emit(tag);
     this.tagInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
-  }
-
-  ngOnDestroy() {
-    this.subscriptions.forEach((subscription: Subscription) => subscription.unsubscribe());
   }
 }

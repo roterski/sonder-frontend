@@ -2,14 +2,16 @@ import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
 import { PaginatorPlugin, PaginationResponse } from '@datorama/akita';
-import { switchMap, map, combineLatest } from 'rxjs/operators';
-import { Post } from '../../models';
+import { switchMap, map, combineLatest, tap } from 'rxjs/operators';
+import { Post, Tag } from '../../models';
 import {
   PostsQuery,
   PostsService,
   POSTS_PAGINATOR,
   MyVotesService,
-  MyVotesQuery } from '../../state';
+  MyVotesQuery,
+  TagsQuery,
+  TagsService } from '../../state';
 
 @Component({
   selector: 'app-posts-list-page',
@@ -20,6 +22,7 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
   public loading$: Observable<boolean>;
   public postVotes$: Observable<any>;
   public pagination$: Observable<PaginationResponse<Post>>;
+  public postFilterTags$: Observable<Tag[]>;
 
   private perPage = 100;
   private subscriptions: Subscription[] = [];
@@ -29,7 +32,9 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
     private postsService: PostsService,
     @Inject(POSTS_PAGINATOR) private paginatorRef: PaginatorPlugin<Post>,
     private myVotesService: MyVotesService,
-    private myVotesQuery: MyVotesQuery
+    private myVotesQuery: MyVotesQuery,
+    private tagsQuery: TagsQuery,
+    private tagsService: TagsService
   ) { }
 
   ngOnInit() {
@@ -38,16 +43,33 @@ export class PostsListPageComponent implements OnInit, OnDestroy {
       map(([storeLoading, pageLoading]) => storeLoading && pageLoading)
     );
     this.postVotes$ = this.myVotesQuery.myPostVotes$;
+    this.postFilterTags$ = this.tagsQuery.getPostFilterTags();
     this.pagination$ = this.paginatorRef.pageChanges.pipe(
-      switchMap((page) => {
-        return this.paginatorRef.getPage(() => this.postsService.getPostsPage({ page, perPage: this.perPage }));
+      combineLatest(
+        this.postFilterTags$.pipe(
+          tap(_ => this.paginatorRef.clearCache())
+        )
+      ),
+      switchMap(([page, tags]) => {
+        debugger
+        return this.paginatorRef.getPage(() => {
+          debugger
+          return this.postsService.getPostsPage({ page, tags, perPage: this.perPage });
+        });
       })
     );
-
     this.subscriptions.push(this.myVotesService.getMyPostVotes().subscribe());
   }
 
-  pageEvent(event: PageEvent) {
+  tagAdded(tag: Tag) {
+    this.tagsService.addPostFilterTag(tag);
+  }
+
+  tagRemoved(tag: Tag) {
+    this.tagsService.removePostFilterTag(tag);
+  }
+
+  pageChanged(event: PageEvent) {
     event.pageIndex - event.previousPageIndex > 0 ? this.paginatorRef.nextPage() : this.paginatorRef.prevPage();
   }
 
