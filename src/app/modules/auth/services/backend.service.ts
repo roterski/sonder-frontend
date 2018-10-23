@@ -17,16 +17,9 @@ export class BackendService {
 
   get(path: string, params: any = {}): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
-      const stringifyValues = (obj) => {
-        return Object.keys(obj).reduce((acc, key) => {
-          acc[key] = JSON.stringify(obj[key]);
-          return acc;
-        }, {});
-      };
-
       return this.http.get(this.url(path), {
         ...headers,
-        params: stringifyValues(params)
+        params
       });
     });
   }
