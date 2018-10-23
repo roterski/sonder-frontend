@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { map, catchError, concat, mergeMap, delay, filter } from 'rxjs/operators';
 import { environment } from '../../../../environments/environment';
 import { SessionQuery } from '../state/session.query';
-import { SessionState } from '../state/session.store';
+import { LogOutService } from '../state/log-out.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,8 @@ import { SessionState } from '../state/session.store';
 export class BackendService {
   constructor(
     private http: HttpClient,
-    private sessionQuery: SessionQuery) { }
+    private sessionQuery: SessionQuery,
+    private logOutService: LogOutService) { }
 
   get(path: string, params: any = {}): Observable<any> {
     return this.performAuthenticatedRequest(headers => {
@@ -46,13 +47,15 @@ export class BackendService {
   }
 
   private performAuthenticatedRequest(requestMethod): Observable<any> {
-      return this
-        .sessionQuery
-        .select((session: SessionState) => session.backendAuthToken)
+      return this.sessionQuery.backendToken$
         .pipe(
           filter((token: string) => !!token),
           // delay(environment.production ? 0 : 1000), // DEVELOPMENT_ONLY
-          switchMap((token: string) => requestMethod(this.headers(token)))
+          switchMap((token: string) => requestMethod(this.headers(token))),
+          catchError((error) => {
+            if (error.status === 401) { this.logOutService.logOut(); }
+            return error;
+          })
         );
   }
 

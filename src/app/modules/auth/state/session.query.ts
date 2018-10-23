@@ -6,6 +6,7 @@ import { SessionStore, SessionState } from './session.store';
 @Injectable({ providedIn: 'root' })
 export class SessionQuery extends Query<SessionState> {
   isLoggedIn$: Observable<boolean> = this.select(state => toBoolean(state.backendAuthToken));
+  backendToken$: Observable<string> = this.select((state: SessionState) => state.backendAuthToken);
 
   constructor(protected store: SessionStore) {
     super(store);
